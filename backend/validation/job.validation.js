@@ -1,0 +1,113 @@
+import Joi from "joi";
+
+export const createJobSchema = Joi.object({
+  title: Joi.string().trim().required().messages({
+    "string.empty": "Job title is required.",
+    "any.required": "Job title is required.",
+  }),
+
+  description: Joi.string().trim().required().messages({
+    "string.empty": "Job description is required.",
+    "any.required": "Job description is required.",
+  }),
+
+  location: Joi.string().trim().required().messages({
+    "string.empty": "Location is required.",
+    "any.required": "Location is required.",
+  }),
+
+  workplaceType: Joi.string()
+    .valid("Remote", "Hybrid", "On-site")
+    .required()
+    .messages({
+      "any.only": "Workplace type must be Remote, Hybrid or On-site.",
+      "any.required": "Workplace type is required.",
+    }),
+
+  employmentType: Joi.string()
+    .valid("Full-time", "Part-time", "Internship", "Contract")
+    .required()
+    .messages({
+      "any.only":
+        "Employment type must be Full-time, Part-time, Internship or Contract.",
+      "any.required": "Employment type is required.",
+    }),
+
+  experience: Joi.string()
+    .valid("Fresher", "0-1 Years", "1-3 Years", "3-5 Years", "5+ Years")
+    .required()
+    .messages({
+      "any.only": "Please select a valid experience level.",
+      "any.required": "Experience is required.",
+    }),
+
+  salary: Joi.object({
+    min: Joi.number().min(0).required(),
+
+    max: Joi.number().min(Joi.ref("min")).required().messages({
+      "number.min":
+        "Maximum salary must be greater than or equal to minimum salary.",
+    }),
+  }).required(),
+
+  skills: Joi.array().items(Joi.string().trim()).min(1).required().messages({
+    "array.min": "At least one skill is required.",
+  }),
+
+  responsibilities: Joi.array()
+    .items(Joi.string().trim())
+    .min(1)
+    .required()
+    .messages({
+      "array.min": "At least one responsibility is required.",
+    }),
+
+  requirements: Joi.array()
+    .items(Joi.string().trim())
+    .min(1)
+    .required()
+    .messages({
+      "array.min": "At least one requirement is required.",
+    }),
+
+  openings: Joi.number().integer().min(1).default(1),
+});
+
+export const updateJobSchema = Joi.object({
+  title: Joi.string().trim(),
+
+  description: Joi.string().trim(),
+
+  location: Joi.string().trim(),
+
+  workplaceType: Joi.string().valid("Remote", "Hybrid", "On-site"),
+
+  employmentType: Joi.string().valid(
+    "Full-time",
+    "Part-time",
+    "Internship",
+    "Contract",
+  ),
+
+  experience: Joi.string().valid(
+    "Fresher",
+    "0-1 Years",
+    "1-3 Years",
+    "3-5 Years",
+    "5+ Years",
+  ),
+
+  salary: Joi.object({
+    min: Joi.number().min(0),
+
+    max: Joi.number().min(Joi.ref("min")),
+  }),
+
+  skills: Joi.array().items(Joi.string().trim()),
+
+  responsibilities: Joi.array().items(Joi.string().trim()),
+
+  requirements: Joi.array().items(Joi.string().trim()),
+
+  openings: Joi.number().integer().min(1),
+}).min(1);
