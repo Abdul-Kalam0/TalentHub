@@ -28,7 +28,6 @@ export const authenticate = async (req, res, next) => {
     }
 
     req.user = existingUser;
-
     next();
   } catch (error) {
     next(error);

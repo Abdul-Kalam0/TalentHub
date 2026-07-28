@@ -12,14 +12,22 @@ app.use(
     credentials: true,
   }),
 );
-
-app.use(cookieParser());
 app.use(express.json());
+app.use(cookieParser());
 
 import authRoutes from "./routes/auth.routes.js";
+import recruiterRoutes from "./routes/recruiter.routes.js";
+import applicantRoutes from "./routes/applicant.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
-app.use("/api/auth", authRoutes);
+//Auth
+app.use("/api", authRoutes);
+
+//Recruiter
+app.use("/api", recruiterRoutes);
+
+//Applicant
+app.use("/api", applicantRoutes);
 
 //Global error handler
 app.use(errorHandler);
