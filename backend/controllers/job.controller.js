@@ -80,7 +80,7 @@ export const deleteJob = async (req, res, next) => {
 
 export const getAllJobs = async (req, res, next) => {
   try {
-    const allJobs = await getAllJobsService();
+    const allJobs = await getAllJobsService(req.query);
 
     return res.status(200).json({
       success: true,

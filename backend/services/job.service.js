@@ -109,15 +109,92 @@ export const deleteJobService = async (userId, jobId) => {
   return deletedJob;
 };
 
-export const getAllJobsService = async () => {
-  const allJobs = await JobModel.find()
+export const getAllJobsService = async (query) => {
+  const filter = {};
+
+  // Search
+  if (query.search) {
+    filter.$or = [
+      { title: { $regex: query.search, $options: "i" } },
+      { description: { $regex: query.search, $options: "i" } },
+      {
+        skills: {
+          $elemMatch: {
+            $regex: query.search,
+            $options: "i",
+          },
+        },
+      },
+    ];
+  }
+
+  // Filters
+  if (query.location) {
+    filter.location = {
+      $regex: query.location,
+      $options: "i",
+    };
+  }
+
+  if (query.experience) {
+    filter.experience = {
+      $regex: query.experience,
+      $options: "i",
+    };
+  }
+
+  if (query.employmentType) {
+    filter.employmentType = {
+      $regex: query.employmentType,
+      $options: "i",
+    };
+  }
+
+  if (query.workplaceType) {
+    filter.workplaceType = {
+      $regex: query.workplaceType,
+      $options: "i",
+    };
+  }
+
+  if (query.salary) {
+    filter["salary.min"] = {
+      $gte: Number(query.salary),
+    };
+  }
+
+  // Sorting
+  let sort = {
+    createdAt: -1,
+  };
+
+  if (query.sort === "oldest") {
+    sort = {
+      createdAt: 1,
+    };
+  }
+
+  if (query.sort === "salary-asc") {
+    sort = {
+      "salary.min": 1,
+    };
+  }
+
+  if (query.sort === "salary-desc") {
+    sort = {
+      "salary.max": -1,
+    };
+  }
+
+  console.log("Query:", query);
+  console.log("Filter:", JSON.stringify(filter, null, 2));
+
+  const allJobs = await JobModel.find(filter)
     .populate({
       path: "recruiter",
       select: "companyName companyLogo",
     })
-    .sort({
-      createdAt: -1,
-    });
+    .sort(sort);
 
   return allJobs;
 };
