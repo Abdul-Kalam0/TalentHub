@@ -86,6 +86,7 @@ export const getAllJobs = async (req, res, next) => {
       success: true,
       message: "Jobs fetched successfully",
       data: allJobs,
+      pagination: allJobs.pagination,
     });
   } catch (error) {
     next(error);

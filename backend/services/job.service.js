@@ -186,15 +186,29 @@ export const getAllJobsService = async (query) => {
     };
   }
 
-  console.log("Query:", query);
-  console.log("Filter:", JSON.stringify(filter, null, 2));
+  // Pagination
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  const totalJobs = await JobModel.countDocuments(filter);
 
   const allJobs = await JobModel.find(filter)
     .populate({
       path: "recruiter",
       select: "companyName companyLogo",
     })
-    .sort(sort);
+    .sort(sort)
+    .skip(skip)
+    .limit(limit);
 
-  return allJobs;
+  return {
+    jobs: allJobs,
+    pagination: {
+      totalJobs,
+      totalPages: Math.ceil(totalJobs / limit),
+      currentPage: page,
+      limit,
+    },
+  };
 };
