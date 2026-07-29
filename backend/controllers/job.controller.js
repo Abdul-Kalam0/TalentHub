@@ -5,6 +5,8 @@ import {
   getJobByIdService,
   getMyJobsService,
   updateJobService,
+  archiveJobService,
+  getSimilarJobsService,
 } from "../services/job.service.js";
 
 export const createJob = async (req, res, next) => {
@@ -87,6 +89,34 @@ export const getAllJobs = async (req, res, next) => {
       message: "Jobs fetched successfully",
       data: allJobs,
       pagination: allJobs.pagination,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const archiveJob = async (req, res, next) => {
+  try {
+    const archivedJob = await archiveJobService(req.user._id, req.params.jobId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Job archived successfully",
+      data: archivedJob,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSimilarJobs = async (req, res, next) => {
+  try {
+    const similarJobs = await getSimilarJobsService(req.params.jobId);
+
+    res.status(200).json({
+      success: true,
+      message: "Similar jobs fetched successfully",
+      data: similarJobs,
     });
   } catch (error) {
     next(error);

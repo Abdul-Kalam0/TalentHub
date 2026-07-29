@@ -5,9 +5,12 @@ import { ROLES } from "../constants/roles.js";
 import {
   getApplicantProfile,
   updateApplicantProfile,
+  uploadPhoto,
+  uploadResume,
 } from "../controllers/applicant.controller.js";
 import validate from "../middlewares/validate.middleware.js";
 import { updateApplicantProfileSchema } from "../validation/applicant.validation.js";
+import upload from "../middlewares/upload.middleware.js";
 const router = express.Router();
 
 //Applicant APIs
@@ -24,6 +27,20 @@ router.put(
   authenticate,
   authorize(ROLES.APPLICANT),
   updateApplicantProfile,
+);
+
+router.patch(
+  "/applicants/me/photo",
+  authenticate,
+  upload.single("photo"),
+  uploadPhoto,
+);
+
+router.patch(
+  "/applicants/me/resume",
+  authenticate,
+  upload.single("resume"),
+  uploadResume,
 );
 
 export default router;

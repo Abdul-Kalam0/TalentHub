@@ -29,7 +29,10 @@ export const getMyJobsService = async (userId) => {
 };
 
 export const getJobByIdService = async (jobId) => {
-  const existingJob = await JobModel.findById(jobId).populate({
+  const existingJob = await JobModel.findOne({
+    _id: jobId,
+    isArchived: false,
+  }).populate({
     path: "recruiter",
     populate: {
       path: "user",
@@ -110,7 +113,9 @@ export const deleteJobService = async (userId, jobId) => {
 };
 
 export const getAllJobsService = async (query) => {
-  const filter = {};
+  const filter = {
+    isArchived: false,
+  };
 
   // Search
   if (query.search) {
@@ -211,4 +216,72 @@ export const getAllJobsService = async (query) => {
       limit,
     },
   };
+};
+
+export const archiveJobService = async (userId, jobId) => {
+  const existingRecruiter = await RecruiterModel.findOne({
+    user: userId,
+  });
+
+  if (!existingRecruiter) {
+    const error = new Error("Recruiter not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingJob = await JobModel.findById(jobId);
+
+  if (!existingJob) {
+    const error = new Error("Job not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  if (existingJob.recruiter.toString() !== existingRecruiter._id.toString()) {
+    const error = new Error("You are not authorized to archive this job");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  if (existingJob.isArchived) {
+    const error = new Error("Job is already archived");
+    error.statusCode = 409;
+    throw error;
+  }
+
+  existingJob.isArchived = true;
+
+  await existingJob.save();
+
+  return existingJob;
+};
+
+export const getSimilarJobsService = async (jobId) => {
+  const existingJob = await JobModel.findById(jobId);
+
+  if (!existingJob) {
+    const error = new Error("Job not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const similarJobs = await JobModel.find({
+    _id: { $ne: existingJob._id },
+    category: existingJob.category,
+    employmentType: existingJob.employmentType,
+    location: existingJob.location,
+    isArchived: false,
+    applicationDeadline: { $gte: new Date() },
+  })
+    .populate({
+      path: "recruiter",
+      populate: {
+        path: "user",
+        select: "fullName email",
+      },
+    })
+    .sort({ createdAt: -1 })
+    .limit(5);
+
+  return similarJobs;
 };

@@ -48,14 +48,19 @@ const jobSchema = new mongoose.Schema(
       min: {
         type: Number,
         required: true,
-        min: 0,
+        min: 1,
       },
 
       max: {
         type: Number,
         required: true,
-        min: 0,
+        min: 1,
       },
+    },
+
+    applicationDeadline: {
+      type: Date,
+      required: true,
     },
 
     skills: [
@@ -83,6 +88,11 @@ const jobSchema = new mongoose.Schema(
       type: Number,
       default: 1,
       min: 1,
+    },
+
+    isArchived: {
+      type: Boolean,
+      default: false,
     },
   },
   {

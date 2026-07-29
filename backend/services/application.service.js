@@ -22,6 +22,18 @@ export const applyForJobService = async (userId, jobId) => {
     throw error;
   }
 
+  if (existingJob.isArchived) {
+    const error = new Error("This job is no longer accepting applications");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  if (existingJob.applicationDeadline < new Date()) {
+    const error = new Error("The application deadline for this job has passed");
+    error.statusCode = 400;
+    throw error;
+  }
+
   const existingApplication = await ApplicationModel.findOne({
     applicant: existingApplicant._id,
     job: jobId,
