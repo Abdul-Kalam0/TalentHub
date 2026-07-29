@@ -21,6 +21,7 @@ import applicantRoutes from "./routes/applicant.routes.js";
 import jobRoutes from "./routes/job.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
 import dashboardRoutes from "./routes/dashboard.routes.js";
+import bookmarkRoutes from "./routes/dashboard.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 //Auth
@@ -40,6 +41,9 @@ app.use("/api", applicationRoutes);
 
 //Dashboard
 app.use("/api", dashboardRoutes);
+
+//Bookmark
+app.use("/api", bookmarkRoutes);
 
 //Global error handler
 app.use(errorHandler);
