@@ -28,3 +28,4 @@ export const updateRecruiterProfileSchema = Joi.object({
   .messages({
     "object.min": "Please provide at least one field to update.",
   });
+

@@ -1,0 +1,183 @@
+import ApplicantModel from "../models/Applicant.js";
+import ApplicationModel from "../models/Application.js";
+import RecruiterModel from "../models/Recruiter.js";
+import JobModel from "../models/Job.js";
+
+export const applyForJobService = async (userId, jobId) => {
+  const existingApplicant = await ApplicantModel.findOne({
+    user: userId,
+  });
+
+  if (!existingApplicant) {
+    const error = new Error("Applicant profile not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingJob = await JobModel.findById(jobId);
+
+  if (!existingJob) {
+    const error = new Error("Job not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingApplication = await ApplicationModel.findOne({
+    applicant: existingApplicant._id,
+    job: jobId,
+  });
+
+  if (existingApplication) {
+    const error = new Error("You have already applied for this job");
+    error.statusCode = 409;
+    throw error;
+  }
+
+  const newApplication = await ApplicationModel.create({
+    applicant: existingApplicant._id,
+    job: jobId,
+  });
+
+  return newApplication;
+};
+
+export const getMyApplicationsService = async (userId) => {
+  const existingApplicant = await ApplicantModel.findOne({ user: userId });
+
+  if (!existingApplicant) {
+    const error = new Error("Applicant profile not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const appliedApplications = await ApplicationModel.find({
+    applicant: existingApplicant._id,
+  }).populate({
+    path: "job",
+    select: "title location employmentType workplaceType salary recruiter",
+  });
+
+  return appliedApplications;
+};
+
+export const getJobApplicationsService = async (userId, jobId) => {
+  const existingRecruiter = await RecruiterModel.findOne({
+    user: userId,
+  });
+
+  if (!existingRecruiter) {
+    const error = new Error("Recruiter profile not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingJob = await JobModel.findById(jobId);
+
+  if (!existingJob) {
+    const error = new Error("Job not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  if (existingJob.recruiter.toString() !== existingRecruiter._id.toString()) {
+    const error = new Error(
+      "You are not authorized to view these applications",
+    );
+    error.statusCode = 403;
+    throw error;
+  }
+
+  const appliedApplications = await ApplicationModel.find({
+    job: jobId,
+  }).populate({
+    path: "applicant",
+    select: "skills experience resume",
+    populate: {
+      path: "user",
+      select: "fullName email",
+    },
+  });
+
+  return appliedApplications;
+};
+
+export const updateApplicationStatusService = async (
+  userId,
+  applicationId,
+  status,
+) => {
+  const existingRecruiter = await RecruiterModel.findOne({
+    user: userId,
+  });
+
+  if (!existingRecruiter) {
+    const error = new Error("Recruiter profile not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingApplication = await ApplicationModel.findById(applicationId);
+
+  if (!existingApplication) {
+    const error = new Error("Application not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingJob = await JobModel.findById(existingApplication.job);
+
+  if (!existingJob) {
+    const error = new Error("Job not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  if (existingJob.recruiter.toString() !== existingRecruiter._id.toString()) {
+    const error = new Error(
+      "You are not authorized to update this application",
+    );
+    error.statusCode = 403;
+    throw error;
+  }
+
+  existingApplication.status = status;
+
+  await existingApplication.save();
+
+  return existingApplication;
+};
+
+export const withdrawApplicationService = async (userId, applicationId) => {
+  const existingApplicant = await ApplicantModel.findOne({
+    user: userId,
+  });
+
+  if (!existingApplicant) {
+    const error = new Error("Applicant profile not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const existingApplication = await ApplicationModel.findById(applicationId);
+
+  if (!existingApplication) {
+    const error = new Error("Application not found");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  if (
+    existingApplication.applicant.toString() !==
+    existingApplicant._id.toString()
+  ) {
+    const error = new Error(
+      "You are not authorized to withdraw this application",
+    );
+    error.statusCode = 403;
+    throw error;
+  }
+
+  await existingApplication.deleteOne();
+
+  return existingApplication;
+};

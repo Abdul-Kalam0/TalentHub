@@ -10,6 +10,7 @@ import validate from "../middlewares/validate.middleware.js";
 import { updateApplicantProfileSchema } from "../validation/applicant.validation.js";
 const router = express.Router();
 
+//Applicant APIs
 router.get(
   "/applicants/profile",
   authenticate,
