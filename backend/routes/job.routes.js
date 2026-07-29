@@ -8,11 +8,13 @@ import { authenticate } from "../middlewares/authenticate.middleware.js";
 import { authorize } from "../middlewares/authorize.middleware.js";
 import { ROLES } from "../constants/roles.js";
 import {
+  archiveJob,
   createJob,
   deleteJob,
   getAllJobs,
   getJobById,
   getMyJobs,
+  getSimilarJobs,
   updateJob,
 } from "../controllers/job.controller.js";
 const router = express.Router();
@@ -42,6 +44,14 @@ router.delete(
   authorize(ROLES.RECRUITER),
   deleteJob,
 );
+router.patch(
+  "/jobs/:jobId/archive",
+  authenticate,
+  authorize(ROLES.RECRUITER),
+  archiveJob,
+);
+
+router.get("/jobs/:jobId/similar", getSimilarJobs);
 
 // Shared Routes (Recruiter + Applicant)
 router.get("/jobs/:jobId", authenticate, getJobById);

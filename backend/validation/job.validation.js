@@ -42,13 +42,23 @@ export const createJobSchema = Joi.object({
     }),
 
   salary: Joi.object({
-    min: Joi.number().min(0).required(),
+    min: Joi.number().greater(0).required().messages({
+      "number.greater": "Minimum salary must be greater than 0.",
+      "any.required": "Minimum salary is required.",
+    }),
 
     max: Joi.number().min(Joi.ref("min")).required().messages({
       "number.min":
         "Maximum salary must be greater than or equal to minimum salary.",
+      "any.required": "Maximum salary is required.",
     }),
   }).required(),
+
+  applicationDeadline: Joi.date().greater("now").required().messages({
+    "date.base": "Application deadline must be a valid date.",
+    "date.greater": "Application deadline cannot be in the past.",
+    "any.required": "Application deadline is required.",
+  }),
 
   skills: Joi.array().items(Joi.string().trim()).min(1).required().messages({
     "array.min": "At least one skill is required.",
@@ -98,9 +108,19 @@ export const updateJobSchema = Joi.object({
   ),
 
   salary: Joi.object({
-    min: Joi.number().min(0),
+    min: Joi.number().greater(0).messages({
+      "number.greater": "Minimum salary must be greater than 0.",
+    }),
 
-    max: Joi.number().min(Joi.ref("min")),
+    max: Joi.number().min(Joi.ref("min")).messages({
+      "number.min":
+        "Maximum salary must be greater than or equal to minimum salary.",
+    }),
+  }),
+
+  applicationDeadline: Joi.date().greater("now").messages({
+    "date.base": "Application deadline must be a valid date.",
+    "date.greater": "Application deadline cannot be in the past.",
   }),
 
   skills: Joi.array().items(Joi.string().trim()),

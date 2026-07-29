@@ -20,6 +20,7 @@ import recruiterRoutes from "./routes/recruiter.routes.js";
 import applicantRoutes from "./routes/applicant.routes.js";
 import jobRoutes from "./routes/job.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 //Auth
@@ -36,6 +37,9 @@ app.use("/api", jobRoutes);
 
 //Application
 app.use("/api", applicationRoutes);
+
+//Dashboard
+app.use("/api", dashboardRoutes);
 
 //Global error handler
 app.use(errorHandler);
