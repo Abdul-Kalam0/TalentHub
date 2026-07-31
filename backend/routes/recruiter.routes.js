@@ -5,9 +5,11 @@ import { ROLES } from "../constants/roles.js";
 import {
   getRecruiterProfile,
   updateRecruiterProfile,
+  uploadCompanyLogo,
 } from "../controllers/recruiter.controller.js";
 import validate from "../middlewares/validate.middleware.js";
 import { updateRecruiterProfileSchema } from "../validation/recruiter.validation.js";
+import upload from "../middlewares/upload.middleware.js";
 
 const router = express.Router();
 
@@ -24,6 +26,13 @@ router.put(
   authenticate,
   authorize(ROLES.RECRUITER),
   updateRecruiterProfile,
+);
+
+router.patch(
+  "/recruiter/company-logo",
+  authenticate,
+  upload.single("companyLogo"),
+  uploadCompanyLogo,
 );
 
 export default router;
