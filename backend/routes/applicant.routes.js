@@ -29,14 +29,14 @@ router.put(
   updateApplicantProfile,
 );
 
-router.patch(
+router.put(
   "/applicants/me/photo",
   authenticate,
   upload.single("photo"),
   uploadPhoto,
 );
 
-router.patch(
+router.put(
   "/applicants/me/resume",
   authenticate,
   upload.single("resume"),

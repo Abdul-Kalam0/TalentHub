@@ -14,10 +14,23 @@ const applicantSchema = new mongoose.Schema(
       default: "",
     },
 
+    headline: {
+      type: String,
+      trim: true,
+      maxlength: 100,
+      default: "",
+    },
+
     bio: {
       type: String,
       trim: true,
       maxlength: 500,
+      default: "",
+    },
+
+    phone: {
+      type: String,
+      trim: true,
       default: "",
     },
 
@@ -48,8 +61,25 @@ const applicantSchema = new mongoose.Schema(
 
     currentLocation: {
       type: String,
-      required: true,
       trim: true,
+      required: true,
+    },
+
+    socialLinks: {
+      github: {
+        type: String,
+        default: "",
+      },
+
+      linkedin: {
+        type: String,
+        default: "",
+      },
+
+      portfolio: {
+        type: String,
+        default: "",
+      },
     },
   },
   {

@@ -20,7 +20,7 @@ export const updateApplicantProfileService = async (userId, updateData) => {
     { user: userId },
     updateData,
     {
-      returnDocument: "after",
+      new: true,
       runValidators: true,
     },
   ).populate("user", "fullName email role");
@@ -62,11 +62,9 @@ export const uploadPhotoService = async (userId, file) => {
 
   await applicant.save();
 
-  const updatedApplicant = await ApplicantModel.findById(
-    applicant._id,
-  ).populate("user", "fullName email role");
+  await applicant.populate("user", "fullName email role");
 
-  return updatedApplicant;
+  return applicant;
 };
 
 export const uploadResumeService = async (userId, file) => {
@@ -101,9 +99,7 @@ export const uploadResumeService = async (userId, file) => {
 
   await applicant.save();
 
-  const updatedApplicant = await ApplicantModel.findById(
-    applicant._id,
-  ).populate("user", "fullName email role");
+  await applicant.populate("user", "fullName email role");
 
-  return updatedApplicant;
+  return applicant;
 };
