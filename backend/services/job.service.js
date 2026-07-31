@@ -267,18 +267,14 @@ export const getSimilarJobsService = async (jobId) => {
 
   const similarJobs = await JobModel.find({
     _id: { $ne: existingJob._id },
-    category: existingJob.category,
     employmentType: existingJob.employmentType,
-    location: existingJob.location,
+    experience: existingJob.experience,
     isArchived: false,
     applicationDeadline: { $gte: new Date() },
   })
     .populate({
       path: "recruiter",
-      populate: {
-        path: "user",
-        select: "fullName email",
-      },
+      select: "companyName companyLogo",
     })
     .sort({ createdAt: -1 })
     .limit(5);
