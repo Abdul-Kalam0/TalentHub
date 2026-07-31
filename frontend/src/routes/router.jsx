@@ -3,11 +3,15 @@ import { createBrowserRouter } from "react-router-dom";
 import PublicRoute from "./PublicRoute";
 import ProtectedRoute from "./ProtectedRoute";
 
+// ===========================
 // Layouts
+// ===========================
 import RootLayout from "../layouts/RootLayout";
 import DashboardLayout from "../layouts/DashboardLayout";
 
+// ===========================
 // Public Pages
+// ===========================
 import HomePage from "../pages/public/HomePage";
 import JobsPage from "../pages/public/JobsPage";
 import JobDetailsPage from "../pages/public/JobDetailsPage";
@@ -15,25 +19,31 @@ import LoginPage from "../pages/public/LoginPage";
 import SignupPage from "../pages/public/SignupPage";
 import NotFoundPage from "../pages/public/NotFoundPage";
 
+// ===========================
 // Applicant Pages
+// ===========================
 import ApplicantDashboardPage from "../pages/applicant/DashboardPage";
+import ApplicantJobsPage from "../pages/applicant/JobsPage";
+import ApplicantJobDetailsPage from "../pages/applicant/JobDetailsPage";
 import ApplicantProfilePage from "../pages/applicant/ProfilePage";
 import AppliedJobsPage from "../pages/applicant/AppliedJobsPage";
 import ApplicantSettingsPage from "../pages/applicant/SettingsPage";
 
+// ===========================
 // Recruiter Pages
+// ===========================
 import RecruiterDashboardPage from "../pages/recruiter/DashboardPage";
-import RecruiterProfilePage from "../pages/recruiter/ProfilePage";
 import RecruiterJobsPage from "../pages/recruiter/JobsPage";
 import CreateJobPage from "../pages/recruiter/CreateJobPage";
 import EditJobPage from "../pages/recruiter/EditJobPage";
 import ApplicantsPage from "../pages/recruiter/ApplicantsPage";
+import RecruiterProfilePage from "../pages/recruiter/ProfilePage";
 import RecruiterSettingsPage from "../pages/recruiter/SettingsPage";
 
 const router = createBrowserRouter([
-  // ===========================
+  // ==========================================================
   // Public Routes
-  // ===========================
+  // ==========================================================
   {
     element: <RootLayout />,
     children: [
@@ -50,7 +60,6 @@ const router = createBrowserRouter([
         element: <JobDetailsPage />,
       },
 
-      // Auth Routes
       {
         element: <PublicRoute />,
         children: [
@@ -67,9 +76,9 @@ const router = createBrowserRouter([
     ],
   },
 
-  // ===========================
+  // ==========================================================
   // Applicant Routes
-  // ===========================
+  // ==========================================================
   {
     element: <ProtectedRoute allowedRoles={["applicant"]} />,
     children: [
@@ -81,12 +90,20 @@ const router = createBrowserRouter([
             element: <ApplicantDashboardPage />,
           },
           {
-            path: "/applicant/profile",
-            element: <ApplicantProfilePage />,
+            path: "/applicant/jobs",
+            element: <ApplicantJobsPage />,
+          },
+          {
+            path: "/applicant/jobs/:jobId",
+            element: <ApplicantJobDetailsPage />,
           },
           {
             path: "/applicant/applied-jobs",
             element: <AppliedJobsPage />,
+          },
+          {
+            path: "/applicant/profile",
+            element: <ApplicantProfilePage />,
           },
           {
             path: "/applicant/settings",
@@ -97,9 +114,9 @@ const router = createBrowserRouter([
     ],
   },
 
-  // ===========================
+  // ==========================================================
   // Recruiter Routes
-  // ===========================
+  // ==========================================================
   {
     element: <ProtectedRoute allowedRoles={["recruiter"]} />,
     children: [
@@ -109,10 +126,6 @@ const router = createBrowserRouter([
           {
             path: "/recruiter/dashboard",
             element: <RecruiterDashboardPage />,
-          },
-          {
-            path: "/recruiter/profile",
-            element: <RecruiterProfilePage />,
           },
           {
             path: "/recruiter/jobs",
@@ -127,8 +140,12 @@ const router = createBrowserRouter([
             element: <EditJobPage />,
           },
           {
-            path: "/recruiter/applicants",
+            path: "/recruiter/jobs/:jobId/applicants",
             element: <ApplicantsPage />,
+          },
+          {
+            path: "/recruiter/profile",
+            element: <RecruiterProfilePage />,
           },
           {
             path: "/recruiter/settings",
@@ -139,9 +156,9 @@ const router = createBrowserRouter([
     ],
   },
 
-  // ===========================
+  // ==========================================================
   // 404
-  // ===========================
+  // ==========================================================
   {
     path: "*",
     element: <NotFoundPage />,

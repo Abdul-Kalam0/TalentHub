@@ -32,7 +32,7 @@ const ApplicantNavbar = () => {
             Dashboard
           </Link>
 
-          <Link to="/jobs" className="hover:text-blue-600">
+          <Link to="/applicant/jobs" className="hover:text-blue-600">
             Browse Jobs
           </Link>
 
