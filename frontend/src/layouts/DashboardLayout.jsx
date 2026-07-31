@@ -1,12 +1,18 @@
 import { Outlet } from "react-router-dom";
-import DashboardNavbar from "../components/navbar/DashboardNavbar";
-import Footer from "../components/footer/Footer";
+
+import { useAuth } from "../context/AuthContext";
+
+import ApplicantNavbar from "../components/navbar/ApplicantNavbar";
+import RecruiterNavbar from "../components/navbar/RecruiterNavbar";
 
 const DashboardLayout = () => {
+  const { user } = useAuth();
+
   return (
     <>
-      <DashboardNavbar />
-      <main>
+      {user?.role === "applicant" ? <ApplicantNavbar /> : <RecruiterNavbar />}
+
+      <main className="min-h-[calc(100vh-80px)] bg-gray-50">
         <Outlet />
       </main>
     </>
