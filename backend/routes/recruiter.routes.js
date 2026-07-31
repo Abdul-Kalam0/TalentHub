@@ -29,7 +29,7 @@ router.put(
 );
 
 router.patch(
-  "/recruiter/company-logo",
+  "/recruiters/company-logo",
   authenticate,
   upload.single("companyLogo"),
   uploadCompanyLogo,

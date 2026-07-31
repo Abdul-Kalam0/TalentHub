@@ -2,21 +2,21 @@ import RecruiterModel from "../models/Recruiter.js";
 import { uploadToCloudinary } from "../utils/cloudinaryUpload.js";
 
 export const getRecruiterProfileService = async (userId) => {
-  const recruiterProfile = await RecruiterModel.findOne({
+  const recruiter = await RecruiterModel.findOne({
     user: userId,
   }).populate("user", "fullName email role");
 
-  if (!recruiterProfile) {
+  if (!recruiter) {
     const error = new Error("Recruiter profile not found");
     error.statusCode = 404;
     throw error;
   }
 
-  return recruiterProfile;
+  return recruiter;
 };
 
 export const updateRecruiterProfileService = async (userId, updateData) => {
-  const updatedRecruiterProfile = await RecruiterModel.findOneAndUpdate(
+  const recruiter = await RecruiterModel.findOneAndUpdate(
     { user: userId },
     updateData,
     {
@@ -25,13 +25,13 @@ export const updateRecruiterProfileService = async (userId, updateData) => {
     },
   ).populate("user", "fullName email role");
 
-  if (!updatedRecruiterProfile) {
+  if (!recruiter) {
     const error = new Error("Recruiter profile not found");
     error.statusCode = 404;
     throw error;
   }
 
-  return updatedRecruiterProfile;
+  return recruiter;
 };
 
 export const uploadCompanyLogoService = async (userId, file) => {
@@ -40,7 +40,7 @@ export const uploadCompanyLogoService = async (userId, file) => {
   });
 
   if (!recruiter) {
-    const error = new Error("Recruiter profile not found.");
+    const error = new Error("Recruiter profile not found");
     error.statusCode = 404;
     throw error;
   }
@@ -48,7 +48,7 @@ export const uploadCompanyLogoService = async (userId, file) => {
   const allowedMimeTypes = ["image/jpeg", "image/png", "image/webp"];
 
   if (!allowedMimeTypes.includes(file.mimetype)) {
-    const error = new Error("Only JPEG, PNG and WEBP images are allowed.");
+    const error = new Error("Only JPEG, PNG and WEBP images are allowed");
     error.statusCode = 400;
     throw error;
   }
@@ -62,5 +62,9 @@ export const uploadCompanyLogoService = async (userId, file) => {
 
   await recruiter.save();
 
-  return recruiter;
+  const updatedRecruiter = await RecruiterModel.findById(
+    recruiter._id,
+  ).populate("user", "fullName email role");
+
+  return updatedRecruiter;
 };

@@ -37,7 +37,18 @@ export const createBookmarkService = async (userId, jobId) => {
     job: jobId,
   });
 
-  return newBookmark;
+  const populatedBookmark = await BookmarkModel.findById(
+    newBookmark._id,
+  ).populate({
+    path: "job",
+    select: "title location employmentType workplaceType salary recruiter",
+    populate: {
+      path: "recruiter",
+      select: "companyName companyLogo",
+    },
+  });
+
+  return populatedBookmark;
 };
 
 export const getMyBookmarksService = async (userId) => {

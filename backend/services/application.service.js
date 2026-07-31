@@ -50,11 +50,24 @@ export const applyForJobService = async (userId, jobId) => {
     job: jobId,
   });
 
-  return newApplication;
+  const populatedApplication = await ApplicationModel.findById(
+    newApplication._id,
+  ).populate({
+    path: "job",
+    select: "title location employmentType workplaceType salary recruiter",
+    populate: {
+      path: "recruiter",
+      select: "companyName companyLogo",
+    },
+  });
+
+  return populatedApplication;
 };
 
 export const getMyApplicationsService = async (userId) => {
-  const existingApplicant = await ApplicantModel.findOne({ user: userId });
+  const existingApplicant = await ApplicantModel.findOne({
+    user: userId,
+  });
 
   if (!existingApplicant) {
     const error = new Error("Applicant profile not found");
@@ -67,6 +80,10 @@ export const getMyApplicationsService = async (userId) => {
   }).populate({
     path: "job",
     select: "title location employmentType workplaceType salary recruiter",
+    populate: {
+      path: "recruiter",
+      select: "companyName companyLogo",
+    },
   });
 
   return appliedApplications;
@@ -156,7 +173,18 @@ export const updateApplicationStatusService = async (
 
   await existingApplication.save();
 
-  return existingApplication;
+  const populatedApplication = await ApplicationModel.findById(
+    existingApplication._id,
+  ).populate({
+    path: "applicant",
+    select: "skills experience resume",
+    populate: {
+      path: "user",
+      select: "fullName email",
+    },
+  });
+
+  return populatedApplication;
 };
 
 export const withdrawApplicationService = async (userId, applicationId) => {

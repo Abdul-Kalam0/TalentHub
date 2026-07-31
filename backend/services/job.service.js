@@ -2,30 +2,45 @@ import JobModel from "../models/Job.js";
 import RecruiterModel from "../models/Recruiter.js";
 
 export const createJobService = async (userId, jobData) => {
-  const existingRecruiter = await RecruiterModel.findOne({ user: userId });
+  const existingRecruiter = await RecruiterModel.findOne({
+    user: userId,
+  });
+
   if (!existingRecruiter) {
     const error = new Error("Recruiter not found");
     error.statusCode = 404;
     throw error;
   }
+
   const newJob = await JobModel.create({
     recruiter: existingRecruiter._id,
     ...jobData,
   });
-  return newJob;
+
+  const populatedJob = await JobModel.findById(newJob._id).populate({
+    path: "recruiter",
+    select: "companyName companyLogo",
+  });
+
+  return populatedJob;
 };
 
 export const getMyJobsService = async (userId) => {
-  const existingRecruiter = await RecruiterModel.findOne({ user: userId });
+  const existingRecruiter = await RecruiterModel.findOne({
+    user: userId,
+  });
+
   if (!existingRecruiter) {
     const error = new Error("Recruiter not found");
     error.statusCode = 404;
     throw error;
   }
-  const allMyJobs = await JobModel.find({
+
+  const jobs = await JobModel.find({
     recruiter: existingRecruiter._id,
   }).sort({ createdAt: -1 });
-  return allMyJobs;
+
+  return jobs;
 };
 
 export const getJobByIdService = async (jobId) => {
@@ -77,6 +92,9 @@ export const updateJobService = async (userId, jobId, updateData) => {
   const updatedJob = await JobModel.findByIdAndUpdate(jobId, updateData, {
     returnDocument: "after",
     runValidators: true,
+  }).populate({
+    path: "recruiter",
+    select: "companyName companyLogo",
   });
 
   return updatedJob;
@@ -198,7 +216,7 @@ export const getAllJobsService = async (query) => {
 
   const totalJobs = await JobModel.countDocuments(filter);
 
-  const allJobs = await JobModel.find(filter)
+  const jobs = await JobModel.find(filter)
     .populate({
       path: "recruiter",
       select: "companyName companyLogo",
@@ -208,7 +226,7 @@ export const getAllJobsService = async (query) => {
     .limit(limit);
 
   return {
-    jobs: allJobs,
+    jobs,
     pagination: {
       totalJobs,
       totalPages: Math.ceil(totalJobs / limit),
@@ -253,7 +271,12 @@ export const archiveJobService = async (userId, jobId) => {
 
   await existingJob.save();
 
-  return existingJob;
+  const archivedJob = await JobModel.findById(existingJob._id).populate({
+    path: "recruiter",
+    select: "companyName companyLogo",
+  });
+
+  return archivedJob;
 };
 
 export const getSimilarJobsService = async (jobId) => {

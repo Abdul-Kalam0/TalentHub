@@ -6,11 +6,12 @@ import {
 
 export const getRecruiterProfile = async (req, res, next) => {
   try {
-    const recruiterProfile = await getRecruiterProfileService(req.user._id);
+    const recruiter = await getRecruiterProfileService(req.user._id);
 
     return res.status(200).json({
       success: true,
-      data: recruiterProfile,
+      message: "Recruiter profile fetched successfully",
+      data: recruiter,
     });
   } catch (error) {
     next(error);
@@ -19,15 +20,15 @@ export const getRecruiterProfile = async (req, res, next) => {
 
 export const updateRecruiterProfile = async (req, res, next) => {
   try {
-    const updatedRecruiterProfile = await updateRecruiterProfileService(
+    const recruiter = await updateRecruiterProfileService(
       req.user._id,
       req.body,
     );
 
     return res.status(200).json({
       success: true,
-      message: "Recruiter profile updated successfully.",
-      data: updatedRecruiterProfile,
+      message: "Recruiter profile updated successfully",
+      data: recruiter,
     });
   } catch (error) {
     next(error);
@@ -37,7 +38,7 @@ export const updateRecruiterProfile = async (req, res, next) => {
 export const uploadCompanyLogo = async (req, res, next) => {
   try {
     if (!req.file) {
-      const error = new Error("Company logo is required.");
+      const error = new Error("Company logo is required");
       error.statusCode = 400;
       throw error;
     }
@@ -46,7 +47,7 @@ export const uploadCompanyLogo = async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      message: "Company logo uploaded successfully.",
+      message: "Company logo uploaded successfully",
       data: recruiter,
     });
   } catch (error) {

@@ -1,83 +1,75 @@
 import {
-  applyForJobService,
-  getJobApplicationsService,
-  getMyApplicationsService,
-  updateApplicationStatusService,
-  withdrawApplicationService,
-} from "../services/application.service.js";
+  getApplicantProfileService,
+  updateApplicantProfileService,
+  uploadPhotoService,
+  uploadResumeService,
+} from "../services/applicant.service.js";
 
-export const applyForJob = async (req, res, next) => {
+export const getApplicantProfile = async (req, res, next) => {
   try {
-    const appliedJob = await applyForJobService(req.user._id, req.params.jobId);
-    return res.status(201).json({
-      success: true,
-      message: "Applied to the job successfully",
-      data: appliedJob,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+    const applicant = await getApplicantProfileService(req.user._id);
 
-export const getMyApplications = async (req, res, next) => {
-  try {
-    const appliedJobs = await getMyApplicationsService(req.user._id);
     return res.status(200).json({
       success: true,
-      message: "Applications fetched successfully",
-      data: appliedJobs,
+      message: "Applicant profile fetched successfully",
+      data: applicant,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export const getJobApplications = async (req, res, next) => {
+export const updateApplicantProfile = async (req, res, next) => {
   try {
-    const applications = await getJobApplicationsService(
+    const applicant = await updateApplicantProfileService(
       req.user._id,
-      req.params.jobId,
+      req.body,
     );
 
     return res.status(200).json({
       success: true,
-      message: "Applications fetched successfully",
-      data: applications,
+      message: "Applicant profile updated successfully",
+      data: applicant,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export const updateApplicationStatus = async (req, res, next) => {
+export const uploadPhoto = async (req, res, next) => {
   try {
-    const updatedApplication = await updateApplicationStatusService(
-      req.user._id,
-      req.params.applicationId,
-      req.body.status,
-    );
+    if (!req.file) {
+      const error = new Error("Photo is required");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const applicant = await uploadPhotoService(req.user._id, req.file);
 
     return res.status(200).json({
       success: true,
-      message: "Application status updated successfully",
-      data: updatedApplication,
+      message: "Photo uploaded successfully",
+      data: applicant,
     });
   } catch (error) {
     next(error);
   }
 };
 
-export const withdrawApplication = async (req, res, next) => {
+export const uploadResume = async (req, res, next) => {
   try {
-    const deletedApplication = await withdrawApplicationService(
-      req.user._id,
-      req.params.applicationId,
-    );
+    if (!req.file) {
+      const error = new Error("Resume is required");
+      error.statusCode = 400;
+      throw error;
+    }
+
+    const applicant = await uploadResumeService(req.user._id, req.file);
 
     return res.status(200).json({
       success: true,
-      message: "Application withdrawn successfully",
-      data: deletedApplication,
+      message: "Resume uploaded successfully",
+      data: applicant,
     });
   } catch (error) {
     next(error);
