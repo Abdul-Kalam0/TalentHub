@@ -21,6 +21,13 @@ const recruiterSchema = new mongoose.Schema(
       default: "",
     },
 
+    industry: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 100,
+    },
+
     website: {
       type: String,
       trim: true,
@@ -33,7 +40,7 @@ const recruiterSchema = new mongoose.Schema(
       required: true,
     },
 
-    aboutCompany: {
+    description: {
       type: String,
       trim: true,
       maxlength: 1000,

@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import initializeDB from "./config/db.js";
 import server from "./index.js";
 

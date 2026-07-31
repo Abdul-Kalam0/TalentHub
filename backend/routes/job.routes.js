@@ -44,7 +44,7 @@ router.delete(
   authorize(ROLES.RECRUITER),
   deleteJob,
 );
-router.patch(
+router.put(
   "/jobs/:jobId/archive",
   authenticate,
   authorize(ROLES.RECRUITER),

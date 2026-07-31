@@ -1,5 +1,6 @@
 import JobModel from "../models/Job.js";
 import RecruiterModel from "../models/Recruiter.js";
+import mongoose from "mongoose";
 
 export const createJobService = async (userId, jobData) => {
   const existingRecruiter = await RecruiterModel.findOne({
@@ -36,18 +37,68 @@ export const getMyJobsService = async (userId) => {
     throw error;
   }
 
-  const jobs = await JobModel.find({
-    recruiter: existingRecruiter._id,
-  }).sort({ createdAt: -1 });
+  const jobs = await JobModel.aggregate([
+    {
+      $match: {
+        recruiter: new mongoose.Types.ObjectId(existingRecruiter._id),
+      },
+    },
+
+    {
+      $lookup: {
+        from: "applications",
+        localField: "_id",
+        foreignField: "job",
+        as: "applications",
+      },
+    },
+
+    {
+      $addFields: {
+        applicationCount: {
+          $size: "$applications",
+        },
+      },
+    },
+
+    {
+      $project: {
+        applications: 0,
+      },
+    },
+
+    {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+  ]);
 
   return jobs;
 };
 
+// export const getJobByIdService = async (jobId) => {
+//   const existingJob = await JobModel.findOne({
+//     _id: jobId,
+//     isArchived: false,
+//   }).populate({
+//     path: "recruiter",
+//     populate: {
+//       path: "user",
+//       select: "fullName email",
+//     },
+//   });
+
+//   if (!existingJob) {
+//     const error = new Error("Job not found");
+//     error.statusCode = 404;
+//     throw error;
+//   }
+
+//   return existingJob;
+// };
 export const getJobByIdService = async (jobId) => {
-  const existingJob = await JobModel.findOne({
-    _id: jobId,
-    isArchived: false,
-  }).populate({
+  const existingJob = await JobModel.findById(jobId).populate({
     path: "recruiter",
     populate: {
       path: "user",

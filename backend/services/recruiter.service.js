@@ -17,7 +17,9 @@ export const getRecruiterProfileService = async (userId) => {
 
 export const updateRecruiterProfileService = async (userId, updateData) => {
   const recruiter = await RecruiterModel.findOneAndUpdate(
-    { user: userId },
+    {
+      user: userId,
+    },
     updateData,
     {
       returnDocument: "after",

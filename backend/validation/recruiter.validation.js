@@ -1,9 +1,12 @@
 import Joi from "joi";
-import { ROLES } from "../constants/roles.js";
 
 export const updateRecruiterProfileSchema = Joi.object({
   companyName: Joi.string().trim().max(100).messages({
     "string.max": "Company name cannot exceed 100 characters.",
+  }),
+
+  industry: Joi.string().trim().max(100).messages({
+    "string.max": "Industry cannot exceed 100 characters.",
   }),
 
   companyLogo: Joi.string().trim().uri().allow("").messages({
@@ -20,12 +23,11 @@ export const updateRecruiterProfileSchema = Joi.object({
       "any.only": "Please select a valid company size.",
     }),
 
-  aboutCompany: Joi.string().trim().max(1000).messages({
-    "string.max": "About company cannot exceed 1000 characters.",
+  description: Joi.string().trim().max(1000).messages({
+    "string.max": "Description cannot exceed 1000 characters.",
   }),
 })
   .min(1)
   .messages({
     "object.min": "Please provide at least one field to update.",
   });
-

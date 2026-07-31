@@ -28,7 +28,7 @@ router.put(
   updateRecruiterProfile,
 );
 
-router.patch(
+router.put(
   "/recruiters/company-logo",
   authenticate,
   upload.single("companyLogo"),
