@@ -54,7 +54,8 @@ export const applyForJobService = async (userId, jobId) => {
     newApplication._id,
   ).populate({
     path: "job",
-    select: "title location employmentType workplaceType salary recruiter",
+    select:
+      "title location employmentType workplaceType experience salary applicationDeadline recruiter",
     populate: {
       path: "recruiter",
       select: "companyName companyLogo",
@@ -77,14 +78,19 @@ export const getMyApplicationsService = async (userId) => {
 
   const appliedApplications = await ApplicationModel.find({
     applicant: existingApplicant._id,
-  }).populate({
-    path: "job",
-    select: "title location employmentType workplaceType salary recruiter",
-    populate: {
-      path: "recruiter",
-      select: "companyName companyLogo",
-    },
-  });
+  })
+    .sort({
+      createdAt: -1,
+    })
+    .populate({
+      path: "job",
+      select:
+        "title location employmentType workplaceType experience salary applicationDeadline recruiter",
+      populate: {
+        path: "recruiter",
+        select: "companyName companyLogo",
+      },
+    });
 
   return appliedApplications;
 };
@@ -118,14 +124,18 @@ export const getJobApplicationsService = async (userId, jobId) => {
 
   const appliedApplications = await ApplicationModel.find({
     job: jobId,
-  }).populate({
-    path: "applicant",
-    select: "skills experience resume",
-    populate: {
-      path: "user",
-      select: "fullName email",
-    },
-  });
+  })
+    .sort({
+      createdAt: -1,
+    })
+    .populate({
+      path: "applicant",
+      select: "skills experience resume",
+      populate: {
+        path: "user",
+        select: "fullName email phone",
+      },
+    });
 
   return appliedApplications;
 };

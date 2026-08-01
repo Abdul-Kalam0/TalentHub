@@ -36,7 +36,7 @@ router.get(
   getJobApplications,
 );
 
-router.patch(
+router.put(
   "/applications/:applicationId/status",
   authenticate,
   authorize(ROLES.RECRUITER),
