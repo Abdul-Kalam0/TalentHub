@@ -34,9 +34,8 @@ const AuthBanner = ({ footerText, footerLink, footerLinkText }) => {
         </div>
       </div>
 
-      {/* Illustration */}
       <div className="flex justify-center pt-10">
-        <div className="flex h-56 w-full max-w-sm items-center justify-center rounded-2xl border border-blue-400/40 bg-blue-500/20">
+        <div className="flex h-38 w-full max-w-sm items-center justify-center rounded-2xl border border-blue-400/40 bg-blue-500/20">
           <span className="text-blue-100">Illustration</span>
         </div>
       </div>

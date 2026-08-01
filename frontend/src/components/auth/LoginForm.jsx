@@ -109,13 +109,13 @@ const LoginForm = () => {
             {loading ? "Logging In..." : "Login"}
           </button>
 
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <div className="h-px flex-1 bg-gray-300"></div>
 
             <span className="text-sm text-gray-500">OR</span>
 
             <div className="h-px flex-1 bg-gray-300"></div>
-          </div>
+          </div> */}
 
           {/* <button
             type="button"
