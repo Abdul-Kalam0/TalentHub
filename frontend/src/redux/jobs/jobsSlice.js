@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   jobs: [],
+  pagination: null,
   selectedJob: null,
 
   fetchLoading: false,
@@ -42,7 +43,9 @@ const jobsSlice = createSlice({
       })
       .addCase(fetchJobs.fulfilled, (state, action) => {
         state.fetchLoading = false;
-        state.jobs = action.payload;
+
+        state.jobs = action.payload.jobs;
+        state.pagination = action.payload.pagination;
       })
       .addCase(fetchJobs.rejected, (state, action) => {
         state.fetchLoading = false;
@@ -58,6 +61,7 @@ const jobsSlice = createSlice({
       })
       .addCase(fetchMyJobs.fulfilled, (state, action) => {
         state.fetchLoading = false;
+
         state.jobs = action.payload;
       })
       .addCase(fetchMyJobs.rejected, (state, action) => {
@@ -74,6 +78,7 @@ const jobsSlice = createSlice({
       })
       .addCase(fetchJobById.fulfilled, (state, action) => {
         state.fetchLoading = false;
+
         state.selectedJob = action.payload;
       })
       .addCase(fetchJobById.rejected, (state, action) => {
@@ -90,6 +95,7 @@ const jobsSlice = createSlice({
       })
       .addCase(fetchSimilarJobs.fulfilled, (state, action) => {
         state.fetchLoading = false;
+
         state.jobs = action.payload;
       })
       .addCase(fetchSimilarJobs.rejected, (state, action) => {
@@ -106,6 +112,7 @@ const jobsSlice = createSlice({
       })
       .addCase(createJob.fulfilled, (state, action) => {
         state.createLoading = false;
+
         state.jobs.unshift(action.payload);
       })
       .addCase(createJob.rejected, (state, action) => {

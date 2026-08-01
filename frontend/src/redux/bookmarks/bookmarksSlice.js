@@ -7,7 +7,11 @@ import {
 
 const initialState = {
   bookmarks: [],
-  loading: false,
+
+  fetchLoading: false,
+  createLoading: false,
+  deleteLoading: false,
+
   error: null,
 };
 
@@ -25,15 +29,15 @@ const bookmarksSlice = createSlice({
       // Fetch Bookmarks
       // ==========================
       .addCase(fetchBookmarks.pending, (state) => {
-        state.loading = true;
+        state.fetchLoading = true;
         state.error = null;
       })
       .addCase(fetchBookmarks.fulfilled, (state, action) => {
-        state.loading = false;
+        state.fetchLoading = false;
         state.bookmarks = action.payload;
       })
       .addCase(fetchBookmarks.rejected, (state, action) => {
-        state.loading = false;
+        state.fetchLoading = false;
         state.error = action.error.message;
       })
 
@@ -41,15 +45,16 @@ const bookmarksSlice = createSlice({
       // Create Bookmark
       // ==========================
       .addCase(createBookmark.pending, (state) => {
-        state.loading = true;
+        state.createLoading = true;
         state.error = null;
       })
       .addCase(createBookmark.fulfilled, (state, action) => {
-        state.loading = false;
+        state.createLoading = false;
+
         state.bookmarks.unshift(action.payload);
       })
       .addCase(createBookmark.rejected, (state, action) => {
-        state.loading = false;
+        state.createLoading = false;
         state.error = action.error.message;
       })
 
@@ -57,18 +62,18 @@ const bookmarksSlice = createSlice({
       // Delete Bookmark
       // ==========================
       .addCase(deleteBookmark.pending, (state) => {
-        state.loading = true;
+        state.deleteLoading = true;
         state.error = null;
       })
       .addCase(deleteBookmark.fulfilled, (state, action) => {
-        state.loading = false;
+        state.deleteLoading = false;
 
         state.bookmarks = state.bookmarks.filter(
           (bookmark) => bookmark._id !== action.payload,
         );
       })
       .addCase(deleteBookmark.rejected, (state, action) => {
-        state.loading = false;
+        state.deleteLoading = false;
         state.error = action.error.message;
       });
   },

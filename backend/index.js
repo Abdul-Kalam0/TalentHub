@@ -22,7 +22,7 @@ import applicantRoutes from "./routes/applicant.routes.js";
 import jobRoutes from "./routes/job.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
 import dashboardRoutes from "./routes/dashboard.routes.js";
-import bookmarkRoutes from "./routes/dashboard.routes.js";
+import bookmarkRoutes from "./routes/bookmark.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 //Auth

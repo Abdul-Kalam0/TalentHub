@@ -4,10 +4,16 @@ import api from "../../services/api";
 // ==========================
 // Fetch All Jobs
 // ==========================
-export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
-  const response = await api.get("/jobs");
-  return response.data.data;
-});
+export const fetchJobs = createAsyncThunk(
+  "jobs/fetchJobs",
+  async (params = {}) => {
+    const response = await api.get("/jobs", {
+      params,
+    });
+
+    return response.data.data;
+  },
+);
 
 // ==========================
 // Fetch Recruiter's Jobs
