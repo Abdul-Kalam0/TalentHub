@@ -93,12 +93,12 @@ const LoginForm = () => {
               Remember Me
             </label>
 
-            <Link
+            {/* <Link
               to="/forgot-password"
               className="text-sm font-medium text-blue-600 hover:underline"
             >
               Forgot Password?
-            </Link>
+            </Link> */}
           </div>
 
           <button
@@ -117,12 +117,12 @@ const LoginForm = () => {
             <div className="h-px flex-1 bg-gray-300"></div>
           </div>
 
-          <button
+          {/* <button
             type="button"
             className="w-full rounded-lg border py-3 font-semibold transition hover:bg-gray-50"
           >
             Continue with Google
-          </button>
+          </button> */}
         </form>
       </div>
     </section>
