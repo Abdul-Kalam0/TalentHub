@@ -8,6 +8,7 @@ const app = express();
 
 app.use(
   cors({
+    // origin: "http://localhost:5173/",
     origin: "https://talent-hub-001.vercel.app",
     credentials: true,
   }),
