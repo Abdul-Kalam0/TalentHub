@@ -8,8 +8,14 @@ import {
 } from "./applicationsThunks";
 
 const initialState = {
-  applications: [],
-  loading: false,
+  myApplications: [],
+  jobApplications: [],
+
+  fetchLoading: false,
+  applyLoading: false,
+  updateLoading: false,
+  withdrawLoading: false,
+
   error: null,
 };
 
@@ -27,15 +33,16 @@ const applicationsSlice = createSlice({
       // Apply For Job
       // ==========================
       .addCase(applyForJob.pending, (state) => {
-        state.loading = true;
+        state.applyLoading = true;
         state.error = null;
       })
       .addCase(applyForJob.fulfilled, (state, action) => {
-        state.loading = false;
-        state.applications.unshift(action.payload);
+        state.applyLoading = false;
+
+        state.myApplications.unshift(action.payload);
       })
       .addCase(applyForJob.rejected, (state, action) => {
-        state.loading = false;
+        state.applyLoading = false;
         state.error = action.error.message;
       })
 
@@ -43,15 +50,16 @@ const applicationsSlice = createSlice({
       // Fetch My Applications
       // ==========================
       .addCase(fetchMyApplications.pending, (state) => {
-        state.loading = true;
+        state.fetchLoading = true;
         state.error = null;
       })
       .addCase(fetchMyApplications.fulfilled, (state, action) => {
-        state.loading = false;
-        state.applications = action.payload;
+        state.fetchLoading = false;
+
+        state.myApplications = action.payload;
       })
       .addCase(fetchMyApplications.rejected, (state, action) => {
-        state.loading = false;
+        state.fetchLoading = false;
         state.error = action.error.message;
       })
 
@@ -59,15 +67,16 @@ const applicationsSlice = createSlice({
       // Fetch Job Applications
       // ==========================
       .addCase(fetchJobApplications.pending, (state) => {
-        state.loading = true;
+        state.fetchLoading = true;
         state.error = null;
       })
       .addCase(fetchJobApplications.fulfilled, (state, action) => {
-        state.loading = false;
-        state.applications = action.payload;
+        state.fetchLoading = false;
+
+        state.jobApplications = action.payload;
       })
       .addCase(fetchJobApplications.rejected, (state, action) => {
-        state.loading = false;
+        state.fetchLoading = false;
         state.error = action.error.message;
       })
 
@@ -75,18 +84,18 @@ const applicationsSlice = createSlice({
       // Update Application Status
       // ==========================
       .addCase(updateApplicationStatus.pending, (state) => {
-        state.loading = true;
+        state.updateLoading = true;
         state.error = null;
       })
       .addCase(updateApplicationStatus.fulfilled, (state, action) => {
-        state.loading = false;
+        state.updateLoading = false;
 
-        state.applications = state.applications.map((application) =>
+        state.jobApplications = state.jobApplications.map((application) =>
           application._id === action.payload._id ? action.payload : application,
         );
       })
       .addCase(updateApplicationStatus.rejected, (state, action) => {
-        state.loading = false;
+        state.updateLoading = false;
         state.error = action.error.message;
       })
 
@@ -94,18 +103,18 @@ const applicationsSlice = createSlice({
       // Withdraw Application
       // ==========================
       .addCase(withdrawApplication.pending, (state) => {
-        state.loading = true;
+        state.withdrawLoading = true;
         state.error = null;
       })
       .addCase(withdrawApplication.fulfilled, (state, action) => {
-        state.loading = false;
+        state.withdrawLoading = false;
 
-        state.applications = state.applications.filter(
+        state.myApplications = state.myApplications.filter(
           (application) => application._id !== action.payload,
         );
       })
       .addCase(withdrawApplication.rejected, (state, action) => {
-        state.loading = false;
+        state.withdrawLoading = false;
         state.error = action.error.message;
       });
   },

@@ -40,7 +40,7 @@ export const fetchJobApplications = createAsyncThunk(
 export const updateApplicationStatus = createAsyncThunk(
   "applications/updateApplicationStatus",
   async ({ applicationId, status }) => {
-    const response = await api.patch(`/applications/${applicationId}/status`, {
+    const response = await api.put(`/applications/${applicationId}/status`, {
       status,
     });
 

@@ -1,6 +1,5 @@
 import { useAuth } from "../../context/AuthContext";
 
-import PublicNavbar from "./PublicNavbar";
 import ApplicantNavbar from "./ApplicantNavbar";
 import RecruiterNavbar from "./RecruiterNavbar";
 
@@ -8,18 +7,19 @@ const Navbar = () => {
   const { user } = useAuth();
 
   if (!user) {
-    return <PublicNavbar />;
+    return null;
   }
 
-  if (user.role === "applicant") {
-    return <ApplicantNavbar />;
-  }
+  switch (user.role) {
+    case "applicant":
+      return <ApplicantNavbar />;
 
-  if (user.role === "recruiter") {
-    return <RecruiterNavbar />;
-  }
+    case "recruiter":
+      return <RecruiterNavbar />;
 
-  return <PublicNavbar />;
+    default:
+      return null;
+  }
 };
 
 export default Navbar;

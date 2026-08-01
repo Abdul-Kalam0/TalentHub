@@ -12,6 +12,7 @@ import {
 
 const initialState = {
   jobs: [],
+  similarJobs: [],
   pagination: null,
   selectedJob: null,
 
@@ -96,7 +97,7 @@ const jobsSlice = createSlice({
       .addCase(fetchSimilarJobs.fulfilled, (state, action) => {
         state.fetchLoading = false;
 
-        state.jobs = action.payload;
+        state.similarJobs = action.payload;
       })
       .addCase(fetchSimilarJobs.rejected, (state, action) => {
         state.fetchLoading = false;
@@ -137,6 +138,10 @@ const jobsSlice = createSlice({
         if (state.selectedJob?._id === action.payload._id) {
           state.selectedJob = action.payload;
         }
+
+        state.similarJobs = state.similarJobs.map((job) =>
+          job._id === action.payload._id ? action.payload : job,
+        );
       })
       .addCase(updateJob.rejected, (state, action) => {
         state.updateLoading = false;
@@ -154,6 +159,10 @@ const jobsSlice = createSlice({
         state.archiveLoading = false;
 
         state.jobs = state.jobs.map((job) =>
+          job._id === action.payload._id ? action.payload : job,
+        );
+
+        state.similarJobs = state.similarJobs.map((job) =>
           job._id === action.payload._id ? action.payload : job,
         );
 
@@ -177,6 +186,10 @@ const jobsSlice = createSlice({
         state.deleteLoading = false;
 
         state.jobs = state.jobs.filter((job) => job._id !== action.payload);
+
+        state.similarJobs = state.similarJobs.filter(
+          (job) => job._id !== action.payload,
+        );
 
         if (state.selectedJob?._id === action.payload) {
           state.selectedJob = null;

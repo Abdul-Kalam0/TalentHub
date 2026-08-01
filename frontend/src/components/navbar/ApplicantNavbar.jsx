@@ -1,63 +1,125 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Menu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../context/AuthContext";
+
+import Logo from "../../components/applicant/ApplicantNavbar/Logo";
+import DesktopNavigation from "../../components/applicant/ApplicantNavbar/DesktopNavigation";
+import ProfileDropdown from "../../components/applicant/ApplicantNavbar/ProfileDropdown";
+import MobileDrawer from "../../components/applicant/ApplicantNavbar/MobileDrawer";
 
 const ApplicantNavbar = () => {
   const navigate = useNavigate();
 
   const { user, logout } = useAuth();
 
+  const dropdownRef = useRef(null);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Close profile dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // Prevent body scroll while drawer is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isMobileMenuOpen]);
+
+  const openDrawer = () => {
+    setIsMobileMenuOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+
   const handleLogout = async () => {
+    closeDropdown();
+    closeDrawer();
+
     const result = await logout();
 
     if (result.success) {
-      navigate("/", { replace: true });
+      navigate("/login", {
+        replace: true,
+      });
     }
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white shadow-sm">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-        {/* Logo */}
-        <Link
-          to="/applicant/dashboard"
-          className="text-3xl font-bold text-blue-600"
-        >
-          TalentHub
-        </Link>
+    <>
+      {/* Header */}
 
-        {/* Navigation */}
-        <nav className="flex items-center gap-8 text-sm font-medium">
-          <Link to="/applicant/dashboard" className="hover:text-blue-600">
-            Dashboard
-          </Link>
+      <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-md">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* Logo */}
 
-          <Link to="/applicant/jobs" className="hover:text-blue-600">
-            Browse Jobs
-          </Link>
+          <Logo />
 
-          <Link to="/applicant/applied-jobs" className="hover:text-blue-600">
-            Applied Jobs
-          </Link>
+          {/* Desktop */}
 
-          <Link to="/applicant/profile" className="hover:text-blue-600">
-            Profile
-          </Link>
-        </nav>
+          <div className="hidden items-center gap-4 lg:flex">
+            <DesktopNavigation />
 
-        {/* User */}
-        <div className="flex items-center gap-5">
-          <span className="font-medium">{user?.fullName}</span>
+            <div ref={dropdownRef}>
+              <ProfileDropdown
+                user={user}
+                isOpen={isDropdownOpen}
+                toggleDropdown={toggleDropdown}
+                closeDropdown={closeDropdown}
+                handleLogout={handleLogout}
+              />
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
 
           <button
-            onClick={handleLogout}
-            className="rounded-lg bg-red-500 px-5 py-2 text-white transition hover:bg-red-600"
+            type="button"
+            onClick={openDrawer}
+            aria-label="Open menu"
+            className="rounded-xl border border-gray-200 p-2 transition-all duration-200 hover:bg-gray-100 lg:hidden"
           >
-            Logout
+            <Menu size={24} />
           </button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {/* Mobile Drawer */}
+
+      <MobileDrawer
+        user={user}
+        isOpen={isMobileMenuOpen}
+        closeDrawer={closeDrawer}
+        handleLogout={handleLogout}
+      />
+    </>
   );
 };
 

@@ -23,13 +23,13 @@ const DashboardPage = () => {
 
   if (!dashboard) {
     return (
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
-          <h2 className="text-xl font-semibold text-red-600">
-            Unable to load dashboard.
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="rounded-2xl border border-red-200 bg-red-50 p-8 text-center shadow-sm">
+          <h2 className="text-2xl font-bold text-red-600">
+            Unable to load dashboard
           </h2>
 
-          <p className="mt-2 text-gray-600">
+          <p className="mt-3 text-gray-600">
             Please refresh the page and try again.
           </p>
         </div>
@@ -38,39 +38,42 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8">
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Header */}
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+      <section className="mb-10">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           Recruiter Dashboard
         </h1>
 
-        <p className="mt-2 text-gray-600">
-          Welcome back! Here's an overview of your hiring activity.
+        <p className="mt-3 max-w-2xl text-base leading-7 text-gray-600">
+          Welcome back! Here's a quick overview of your hiring activity,
+          applications, and recruitment progress.
         </p>
-      </div>
+      </section>
 
       {/* Statistics */}
 
-      <DashboardStats dashboard={dashboard} />
+      <section>
+        <DashboardStats dashboard={dashboard} />
+      </section>
 
-      {/* Main Content */}
+      {/* Main Grid */}
 
-      <div className="mt-8 grid gap-8 lg:grid-cols-3">
+      <section className="mt-10 grid gap-8 xl:grid-cols-12">
         {/* Recent Applications */}
 
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-8">
           <RecentApplications applications={dashboard.recentApplications} />
         </div>
 
         {/* Quick Actions */}
 
-        <div>
+        <div className="xl:col-span-4">
           <QuickActions />
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
