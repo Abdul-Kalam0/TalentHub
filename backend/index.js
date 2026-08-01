@@ -25,6 +25,10 @@ import dashboardRoutes from "./routes/dashboard.routes.js";
 import bookmarkRoutes from "./routes/bookmark.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
+app.get("/", (req, res) => {
+  res.send("Backend running successfully");
+});
+
 //Auth
 app.use("/api", authRoutes);
 
