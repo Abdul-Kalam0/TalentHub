@@ -31,7 +31,7 @@ export const updateApplicantProfileSchema = Joi.object({
     "string.max": "Education cannot exceed 200 characters.",
   }),
 
-  skills: Joi.array().items(Joi.string().trim()).messages({
+  skills: Joi.array().items(Joi.string().trim().min(1)).messages({
     "array.base": "Skills must be an array of strings.",
   }),
 
@@ -55,7 +55,7 @@ export const updateApplicantProfileSchema = Joi.object({
     portfolio: Joi.string().trim().uri().allow("").messages({
       "string.uri": "Please enter a valid Portfolio URL.",
     }),
-  }),
+  }).unknown(false),
 })
   .min(1)
   .messages({

@@ -5,6 +5,7 @@ import applicationsReducer from "./applications/applicationsSlice";
 import bookmarksReducer from "./bookmarks/bookmarksSlice";
 import recruiterReducer from "./recruiter/recruiterSlice";
 import dashboardReducer from "./dashboard/dashboardSlice";
+import applicantReducer from "./applicant/applicantSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,5 +14,6 @@ export const store = configureStore({
     bookmarks: bookmarksReducer,
     recruiter: recruiterReducer,
     dashboard: dashboardReducer,
+    applicant: applicantReducer,
   },
 });
