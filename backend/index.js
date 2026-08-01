@@ -10,7 +10,6 @@ app.use(
   cors({
     origin: "https://talent-hub-001.vercel.app",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   }),
 );
 app.use(express.json());
@@ -26,7 +25,7 @@ import bookmarkRoutes from "./routes/bookmark.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 app.get("/", (req, res) => {
-  res.send(<h1>Backend running successfully</h1>);
+  res.send("<h1>Backend running successfully</h1>");
 });
 
 //Auth
