@@ -64,11 +64,11 @@ const JobHero = ({ job }) => {
 
           {/* Salary */}
 
-          <div className="mt-8 flex items-center gap-3">
-            <IndianRupee size={28} className="text-green-600" />
+          <div className="mt-6 flex items-center gap-2 rounded-lg bg-green-50 px-4 py-3 w-fit">
+            <IndianRupee size={20} className="shrink-0 text-green-600" />
 
-            <p className="text-4xl font-bold text-green-600">
-              ₹{job.salary.min.toLocaleString()} - ₹
+            <p className="text-lg font-semibold text-green-700 md:text-xl">
+              {job.salary.min.toLocaleString()} -{" "}
               {job.salary.max.toLocaleString()}
             </p>
           </div>
