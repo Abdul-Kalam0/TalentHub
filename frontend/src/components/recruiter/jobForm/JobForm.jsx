@@ -118,7 +118,18 @@ const JobForm = ({ mode = "create", job = null }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-8 rounded-xl border border-gray-200 bg-white p-8 shadow-sm"
+      className="
+        space-y-6
+        rounded-2xl
+        border
+        border-gray-200
+        bg-white
+        p-4
+        shadow-sm
+        sm:space-y-8
+        sm:p-6
+        lg:p-8
+      "
     >
       <BasicInformation formData={formData} handleChange={handleChange} />
 

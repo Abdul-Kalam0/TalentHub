@@ -29,18 +29,19 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
       {/* Drawer */}
 
       <aside
-        className={`fixed right-0 top-0 z-50 flex h-screen w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
+        className={`fixed right-0 top-0 z-50 flex h-dvh w-[88%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
 
-        <div className="flex items-center justify-between border-b border-gray-200 p-6">
+        <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-6">
           <Logo onClick={closeDrawer} />
 
           <button
             type="button"
             onClick={closeDrawer}
+            aria-label="Close menu"
             className="rounded-xl p-2 transition hover:bg-gray-100"
           >
             <X size={22} />
@@ -49,9 +50,9 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
 
         {/* User */}
 
-        <div className="border-b border-gray-100 p-6">
+        <div className="border-b border-gray-100 p-4 sm:p-6">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-600 text-base font-bold text-white sm:h-14 sm:w-14 sm:text-lg">
               {initials}
             </div>
 
@@ -67,55 +68,65 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
 
         {/* Navigation */}
 
-        <nav className="flex-1 space-y-2 p-4">
-          {navigation.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
+        <nav className="flex-1 overflow-y-auto p-4">
+          <div className="space-y-2 pb-6">
+            {navigation.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  onClick={closeDrawer}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`
+                  }
+                >
+                  <Icon size={18} className="shrink-0" />
+
+                  <span className="truncate">{item.label}</span>
+                </NavLink>
+              );
+            })}
+
+            {/* Create Job */}
+
+            <Link
+              to="/recruiter/jobs/create"
               onClick={closeDrawer}
-              className={({ isActive }) =>
-                `block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                  isActive
-                    ? "bg-blue-50 text-blue-600"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`
-              }
+              className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-700"
             >
-              {item.label}
-            </NavLink>
-          ))}
+              <PlusCircle size={18} />
+              Create Job
+            </Link>
 
-          <Link
-            to="/recruiter/jobs/create"
-            onClick={closeDrawer}
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition-all duration-200 hover:bg-blue-700"
-          >
-            <PlusCircle size={18} />
-            Create Job
-          </Link>
+            {/* Company Profile */}
 
-          <Link
-            to="/recruiter/profile"
-            onClick={closeDrawer}
-            className="mt-3 flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
-          >
-            <Building2 size={18} />
-            Company Profile
-          </Link>
+            <Link
+              to="/recruiter/profile"
+              onClick={closeDrawer}
+              className="flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            >
+              <Building2 size={18} />
+              Company Profile
+            </Link>
+
+            {/* Logout */}
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 px-4 py-3 text-sm font-semibold text-red-600 transition-all duration-200 hover:bg-red-50"
+            >
+              <LogOut size={18} />
+              Logout
+            </button>
+          </div>
         </nav>
-
-        {/* Footer */}
-
-        <div className="border-t border-gray-200 p-4">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 px-4 py-3 text-sm font-semibold text-red-600 transition-all duration-200 hover:bg-red-50"
-          >
-            <LogOut size={18} />
-            Logout
-          </button>
-        </div>
       </aside>
     </>
   );

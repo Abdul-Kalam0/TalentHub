@@ -7,13 +7,20 @@ const Logo = ({ onClick }) => {
       onClick={onClick}
       className="group flex flex-col"
     >
-      <h1 className="text-2xl font-bold tracking-tight text-blue-600 transition-colors duration-200 group-hover:text-blue-700">
+      <h1
+        className="
+          text-xl
+          font-bold
+          tracking-tight
+          text-blue-600
+          transition-colors
+          duration-200
+          group-hover:text-blue-700
+          sm:text-2xl
+        "
+      >
         TalentHub
       </h1>
-
-      <p className="text-xs font-medium tracking-wide text-gray-500">
-        Recruiter Portal
-      </p>
     </Link>
   );
 };

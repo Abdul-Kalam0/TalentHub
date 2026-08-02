@@ -1,12 +1,12 @@
 const DescriptionSection = ({ description, handleChange }) => {
   return (
     <section>
-      <h2 className="mb-6 text-2xl font-semibold text-gray-900">
+      <h2 className="mb-6 text-xl font-bold text-gray-900 sm:text-2xl">
         Job Description
       </h2>
 
       <div>
-        <label className="mb-2 block font-medium text-gray-700">
+        <label className="mb-2 block text-sm font-semibold text-gray-700">
           Description <span className="text-red-500">*</span>
         </label>
 
@@ -17,7 +17,23 @@ const DescriptionSection = ({ description, handleChange }) => {
           onChange={handleChange}
           placeholder="Describe the job role, responsibilities, expectations, and other important details..."
           required
-          className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
+          className="
+            w-full
+            resize-y
+            rounded-xl
+            border
+            border-gray-300
+            px-4
+            py-3
+            text-sm
+            leading-7
+            outline-none
+            transition-all
+            duration-200
+            focus:border-blue-500
+            focus:ring-4
+            focus:ring-blue-100
+          "
         />
       </div>
     </section>

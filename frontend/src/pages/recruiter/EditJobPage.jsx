@@ -23,16 +23,20 @@ const EditJobPage = () => {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       {/* Header */}
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Edit Job</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl lg:text-4xl">
+          Edit Job
+        </h1>
 
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
           Update your job posting information.
         </p>
       </div>
+
+      {/* Form */}
 
       <JobForm mode="edit" job={selectedJob} />
     </div>
