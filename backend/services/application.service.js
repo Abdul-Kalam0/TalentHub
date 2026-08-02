@@ -92,7 +92,12 @@ export const getMyApplicationsService = async (userId) => {
       },
     });
 
-  return appliedApplications;
+  // Remove applications whose job has been deleted
+  const validApplications = appliedApplications.filter(
+    (application) => application.job,
+  );
+
+  return validApplications;
 };
 
 export const getJobApplicationsService = async (userId, jobId) => {

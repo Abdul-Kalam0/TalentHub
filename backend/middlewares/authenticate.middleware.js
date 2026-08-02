@@ -3,7 +3,6 @@ import UserModel from "../models/User.js";
 
 export const authenticate = async (req, res, next) => {
   try {
-    console.log("Cookies:", req.cookies);
     const accessToken = req.cookies.accessToken;
 
     if (!accessToken) {
