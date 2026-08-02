@@ -16,6 +16,8 @@ import EmptyJobs from "../../components/recruiter/jobsPage/EmptyJobs";
 import LoadingJobs from "../../components/recruiter/jobsPage/LoadingJobs";
 import ConfirmModal from "../../components/recruiter/jobsPage/ConfirmModal";
 
+import AIAssistantDrawer from "../../components/recruiter/aiAssistant/AIAssistantDrawer";
+
 const JobsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +29,10 @@ const JobsPage = () => {
 
   const [selectedJobId, setSelectedJobId] = useState(null);
   const [modalType, setModalType] = useState(null);
+
+  // AI Assistant
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [isAIOpen, setIsAIOpen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchMyJobs());
@@ -65,6 +71,18 @@ const JobsPage = () => {
     setModalType("delete");
   };
 
+  // AI Assistant
+
+  const handleOpenAI = (job) => {
+    setSelectedJob(job);
+    setIsAIOpen(true);
+  };
+
+  const handleCloseAI = () => {
+    setSelectedJob(null);
+    setIsAIOpen(false);
+  };
+
   const closeModal = () => {
     setSelectedJobId(null);
     setModalType(null);
@@ -93,14 +111,14 @@ const JobsPage = () => {
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
         {/* Header */}
 
-        <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+        <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
               Manage Jobs
             </h1>
 
-            <p className="mt-2 text-sm text-gray-600 sm:text-base">
-              Manage and monitor all your job postings.
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-gray-600 sm:text-base">
+              Manage, monitor and optimize all your job postings from one place.
             </p>
           </div>
 
@@ -112,19 +130,22 @@ const JobsPage = () => {
               bg-blue-600
               px-6
               py-3
+              text-sm
               font-semibold
               text-white
               transition-all
+              duration-200
               hover:bg-blue-700
               hover:shadow-lg
-              md:w-auto
+              active:scale-[0.98]
+              sm:w-auto
             "
           >
             Create Job
           </button>
         </div>
 
-        {/* Stats */}
+        {/* Statistics */}
 
         <JobStats jobs={jobs} />
 
@@ -153,11 +174,14 @@ const JobsPage = () => {
                 onArchive={handleArchive}
                 onDelete={handleDelete}
                 onViewApplicants={handleViewApplicants}
+                onOpenAI={handleOpenAI}
               />
             ))}
           </div>
         )}
       </div>
+
+      {/* Confirmation Modal */}
 
       <ConfirmModal
         isOpen={modalType !== null}
@@ -172,6 +196,14 @@ const JobsPage = () => {
         variant={modalType === "delete" ? "danger" : "warning"}
         onConfirm={confirmAction}
         onCancel={closeModal}
+      />
+
+      {/* AI Assistant Drawer */}
+
+      <AIAssistantDrawer
+        isOpen={isAIOpen}
+        onClose={handleCloseAI}
+        job={selectedJob}
       />
     </>
   );

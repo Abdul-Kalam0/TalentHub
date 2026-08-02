@@ -1,6 +1,14 @@
+import { Bot } from "lucide-react";
 import { useSelector } from "react-redux";
 
-const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
+const JobCard = ({
+  job,
+  onEdit,
+  onArchive,
+  onDelete,
+  onViewApplicants,
+  onOpenAI,
+}) => {
   const { archiveLoading, deleteLoading } = useSelector((state) => state.jobs);
 
   return (
@@ -43,7 +51,6 @@ const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
           }`}
         >
           <span className="h-2 w-2 rounded-full bg-current" />
-
           {job.isArchived ? "Archived" : "Active"}
         </span>
       </div>
@@ -90,7 +97,20 @@ const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
 
       {/* Actions */}
 
-      <div className="mt-6 grid grid-cols-2 gap-3 lg:flex lg:flex-wrap">
+      <div
+        className="
+          mt-6
+          grid
+          grid-cols-1
+          gap-3
+
+          sm:grid-cols-2
+
+          xl:grid-cols-3
+        "
+      >
+        {/* View Applicants */}
+
         <button
           onClick={() => onViewApplicants(job._id)}
           className="
@@ -101,33 +121,64 @@ const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
             text-sm
             font-semibold
             text-white
-            transition-all
+            transition
             hover:bg-blue-700
           "
         >
           View Applicants
         </button>
 
+        {/* AI Assistant */}
+
+        <button
+          onClick={() => onOpenAI(job)}
+          className="
+            flex
+            items-center
+            justify-center
+            gap-2
+            rounded-xl
+            border
+            border-violet-300
+            bg-violet-50
+            px-4
+            py-2.5
+            text-sm
+            font-semibold
+            text-violet-700
+            transition-all
+            hover:bg-violet-600
+            hover:text-white
+          "
+        >
+          <Bot size={18} />
+          AI Assistant
+        </button>
+
+        {/* Edit */}
+
         {!job.isArchived && (
           <button
             onClick={() => onEdit(job._id)}
             className="
-      rounded-xl
-      border
-      border-amber-500
-      px-4
-      py-2.5
-      text-sm
-      font-semibold
-      text-amber-600
-      transition-all
-      hover:bg-amber-500
-      hover:text-white
-    "
+              rounded-xl
+              border
+              border-amber-500
+              px-4
+              py-2.5
+              text-sm
+              font-semibold
+              text-amber-600
+              transition
+              hover:bg-amber-500
+              hover:text-white
+            "
           >
             Edit
           </button>
         )}
+
+        {/* Archive */}
 
         {!job.isArchived && (
           <button
@@ -142,7 +193,7 @@ const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
               text-sm
               font-semibold
               text-gray-700
-              transition-all
+              transition
               hover:bg-gray-700
               hover:text-white
               disabled:cursor-not-allowed
@@ -152,6 +203,8 @@ const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
             {archiveLoading ? "Archiving..." : "Archive"}
           </button>
         )}
+
+        {/* Delete */}
 
         <button
           disabled={deleteLoading}
@@ -165,7 +218,7 @@ const JobCard = ({ job, onEdit, onArchive, onDelete, onViewApplicants }) => {
             text-sm
             font-semibold
             text-red-600
-            transition-all
+            transition
             hover:bg-red-600
             hover:text-white
             disabled:cursor-not-allowed
