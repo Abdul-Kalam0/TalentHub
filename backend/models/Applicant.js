@@ -53,6 +53,41 @@ const applicantSchema = new mongoose.Schema(
         trim: true,
       },
     ],
+    projects: [
+      {
+        title: {
+          type: String,
+          trim: true,
+          required: true,
+        },
+
+        description: {
+          type: String,
+          trim: true,
+          maxlength: 500,
+          default: "",
+        },
+
+        technologies: [
+          {
+            type: String,
+            trim: true,
+          },
+        ],
+
+        projectUrl: {
+          type: String,
+          trim: true,
+          default: "",
+        },
+
+        githubUrl: {
+          type: String,
+          trim: true,
+          default: "",
+        },
+      },
+    ],
 
     resume: {
       type: String,

@@ -31,9 +31,38 @@ export const updateApplicantProfileSchema = Joi.object({
     "string.max": "Education cannot exceed 200 characters.",
   }),
 
-  skills: Joi.array().items(Joi.string().trim().min(1)).messages({
-    "array.base": "Skills must be an array of strings.",
-  }),
+  skills: Joi.array().items(
+    Joi.string().trim().min(1).messages({
+      "string.empty": "Skill cannot be empty.",
+    }),
+  ),
+
+  projects: Joi.array().items(
+    Joi.object({
+      title: Joi.string().trim().required().messages({
+        "string.empty": "Project title is required.",
+        "any.required": "Project title is required.",
+      }),
+
+      description: Joi.string().trim().max(500).allow("").messages({
+        "string.max": "Project description cannot exceed 500 characters.",
+      }),
+
+      technologies: Joi.array().items(
+        Joi.string().trim().min(1).messages({
+          "string.empty": "Technology cannot be empty.",
+        }),
+      ),
+
+      projectUrl: Joi.string().trim().uri().allow("").messages({
+        "string.uri": "Please enter a valid project URL.",
+      }),
+
+      githubUrl: Joi.string().trim().uri().allow("").messages({
+        "string.uri": "Please enter a valid GitHub URL.",
+      }),
+    }),
+  ),
 
   resume: Joi.string().trim().uri().allow("").messages({
     "string.uri": "Please enter a valid resume URL.",
