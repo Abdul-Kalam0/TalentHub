@@ -29,7 +29,7 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
       {/* Drawer */}
 
       <aside
-        className={`fixed right-0 top-0 z-50 flex h-screen w-[88%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
+        className={`fixed right-0 top-0 z-50 flex h-dvh w-[88%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -68,52 +68,54 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
 
         {/* Navigation */}
 
-        <nav className="flex-1 space-y-2 overflow-y-auto p-4">
-          {navigation.map((item) => {
-            const Icon = item.icon;
+        <nav className="flex-1 overflow-y-auto p-4">
+          <div className="space-y-2">
+            {navigation.map((item) => {
+              const Icon = item.icon;
 
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                onClick={closeDrawer}
-                className={({ isActive }) =>
-                  `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                    isActive
-                      ? "bg-blue-50 text-blue-600"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`
-                }
-              >
-                <Icon size={18} className="shrink-0" />
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  onClick={closeDrawer}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-blue-50 text-blue-600"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`
+                  }
+                >
+                  <Icon size={18} className="shrink-0" />
 
-                <span className="truncate">{item.label}</span>
-              </NavLink>
-            );
-          })}
+                  <span className="truncate">{item.label}</span>
+                </NavLink>
+              );
+            })}
 
-          <Link
-            to="/applicant/profile"
-            onClick={closeDrawer}
-            className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
-          >
-            <UserRound size={18} />
-            View Profile
-          </Link>
+            {/* View Profile */}
+
+            <Link
+              to="/applicant/profile"
+              onClick={closeDrawer}
+              className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-50"
+            >
+              <UserRound size={18} />
+              View Profile
+            </Link>
+
+            {/* Logout */}
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 px-4 py-3 text-sm font-semibold text-red-600 transition-all duration-200 hover:bg-red-50"
+            >
+              <LogOut size={18} />
+              Logout
+            </button>
+          </div>
         </nav>
-
-        {/* Footer */}
-
-        <div className="border-t border-gray-200 p-4">
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 px-4 py-3 text-sm font-semibold text-red-600 transition-all duration-200 hover:bg-red-50"
-          >
-            <LogOut size={18} />
-            Logout
-          </button>
-        </div>
       </aside>
     </>
   );
