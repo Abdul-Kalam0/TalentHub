@@ -5,7 +5,7 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
         Personal Information
       </h2>
 
-      <div className="grid gap-7 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {/* Full Name */}
 
         <div>
@@ -90,7 +90,7 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
             "
           />
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Enter a valid 10-digit mobile number.
           </p>
         </div>
@@ -125,7 +125,7 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
             "
           />
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Recruiters use your location to recommend nearby opportunities.
           </p>
         </div>

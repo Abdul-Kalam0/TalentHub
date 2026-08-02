@@ -77,7 +77,7 @@ const ApplicantNavbar = () => {
       {/* Header */}
 
       <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/90 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
           {/* Logo */}
 
           <Logo />
@@ -104,9 +104,18 @@ const ApplicantNavbar = () => {
             type="button"
             onClick={openDrawer}
             aria-label="Open menu"
-            className="rounded-xl border border-gray-200 p-2 transition-all duration-200 hover:bg-gray-100 lg:hidden"
+            className="
+              rounded-xl
+              border
+              border-gray-200
+              p-2
+              transition-all
+              duration-200
+              hover:bg-gray-100
+              lg:hidden
+            "
           >
-            <Menu size={24} />
+            <Menu size={22} className="sm:h-6 sm:w-6" />
           </button>
         </div>
       </header>

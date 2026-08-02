@@ -13,22 +13,22 @@ const PhotoSection = ({ photo, loading, onUpload }) => {
 
   return (
     <section>
-      <h2 className="mb-6 text-2xl font-semibold text-gray-900">
+      <h2 className="mb-6 text-xl font-semibold text-gray-900 sm:text-2xl">
         Profile Photo
       </h2>
 
-      <div className="rounded-xl border border-gray-200 p-6">
+      <div className="rounded-xl border border-gray-200 p-4 sm:p-6">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           {/* Left */}
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
             <img
               src={
                 photo ||
                 "https://ui-avatars.com/api/?name=Applicant&background=random&size=200"
               }
               alt="Applicant"
-              className="h-32 w-32 rounded-full border-4 border-gray-200 object-cover"
+              className="h-24 w-24 rounded-full border-4 border-gray-200 object-cover sm:h-32 sm:w-32"
             />
 
             <div>
@@ -36,7 +36,7 @@ const PhotoSection = ({ photo, loading, onUpload }) => {
                 Profile Picture
               </h3>
 
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 max-w-md text-sm leading-6 text-gray-500">
                 Upload a professional profile photo to make a stronger first
                 impression.
               </p>
@@ -45,7 +45,7 @@ const PhotoSection = ({ photo, loading, onUpload }) => {
 
           {/* Right */}
 
-          <div className="text-center md:text-right">
+          <div className="w-full text-center md:w-auto md:text-right">
             <input
               ref={inputRef}
               type="file"
@@ -58,7 +58,20 @@ const PhotoSection = ({ photo, loading, onUpload }) => {
               type="button"
               disabled={loading}
               onClick={() => inputRef.current?.click()}
-              className="rounded-lg bg-blue-600 px-8 py-3 font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="
+                w-full
+                rounded-lg
+                bg-blue-600
+                px-8
+                py-3
+                font-medium
+                text-white
+                transition
+                hover:bg-blue-700
+                disabled:cursor-not-allowed
+                disabled:opacity-60
+                md:w-auto
+              "
             >
               {loading
                 ? "Uploading..."

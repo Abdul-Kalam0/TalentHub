@@ -17,7 +17,7 @@ const ResumeSection = ({ resume, loading, onUpload }) => {
         Resume <span className="text-red-500">*</span>
       </h2>
 
-      <div className="rounded-2xl border border-gray-200 p-7">
+      <div className="rounded-2xl border border-gray-200 p-5 sm:p-7">
         <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
           {/* Left */}
 
@@ -32,7 +32,7 @@ const ResumeSection = ({ resume, loading, onUpload }) => {
                   href={resume}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-blue-600 transition hover:text-blue-700 hover:underline"
+                  className="mt-3 inline-flex items-center gap-2 break-all text-sm font-medium text-blue-600 transition hover:text-blue-700 hover:underline"
                 >
                   📄 View Uploaded Resume
                 </a>
@@ -57,7 +57,7 @@ const ResumeSection = ({ resume, loading, onUpload }) => {
 
           {/* Right */}
 
-          <div className="text-center md:text-right">
+          <div className="w-full text-center md:w-auto md:text-right">
             <input
               ref={inputRef}
               type="file"
@@ -71,6 +71,7 @@ const ResumeSection = ({ resume, loading, onUpload }) => {
               disabled={loading}
               onClick={() => inputRef.current?.click()}
               className="
+                w-full
                 rounded-xl
                 bg-blue-600
                 px-7
@@ -83,6 +84,7 @@ const ResumeSection = ({ resume, loading, onUpload }) => {
                 hover:bg-blue-700
                 disabled:cursor-not-allowed
                 disabled:opacity-60
+                md:w-auto
               "
             >
               {loading

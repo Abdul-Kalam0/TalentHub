@@ -35,7 +35,7 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
     <section>
       {/* Header */}
 
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-semibold tracking-tight text-gray-900">
             Skills <span className="text-red-500">*</span>
@@ -46,7 +46,7 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
           </p>
         </div>
 
-        <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
+        <span className="w-fit rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
           {formData.skills.length} Skill
           {formData.skills.length !== 1 ? "s" : ""}
         </span>
@@ -86,6 +86,7 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
           type="button"
           onClick={handleAddSkill}
           className="
+            w-full
             rounded-xl
             bg-blue-600
             px-7
@@ -95,13 +96,14 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
             text-white
             transition
             hover:bg-blue-700
+            sm:w-auto
           "
         >
           Add Skill
         </button>
       </div>
 
-      <p className="mt-2 text-xs text-gray-500">
+      <p className="mt-2 text-xs leading-5 text-gray-500">
         Press <strong>Enter</strong> or click <strong>Add Skill</strong> to add
         a new skill.
       </p>
@@ -115,6 +117,7 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
               key={item}
               className="
                 inline-flex
+                max-w-full
                 items-center
                 gap-2
                 rounded-full
@@ -129,7 +132,7 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
                 transition
               "
             >
-              <span>{item}</span>
+              <span className="break-all">{item}</span>
 
               <button
                 type="button"
@@ -138,6 +141,7 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
                   flex
                   h-5
                   w-5
+                  shrink-0
                   items-center
                   justify-center
                   rounded-full
@@ -152,12 +156,12 @@ const SkillsSection = ({ formData, setFormData, skill, setSkill }) => {
           ))}
         </div>
       ) : (
-        <div className="mt-7 rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
+        <div className="mt-7 rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-5 py-8 text-center sm:px-6 sm:py-10">
           <h3 className="text-lg font-semibold text-gray-900">
             No Skills Added
           </h3>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm leading-6 text-gray-500">
             Add your technical skills to improve profile visibility and help
             recruiters match you with relevant opportunities.
           </p>

@@ -5,7 +5,7 @@ const ProfessionalInformation = ({ formData, handleChange }) => {
         Professional Information
       </h2>
 
-      <div className="grid gap-7 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {/* Professional Headline */}
 
         <div className="md:col-span-2">
@@ -36,7 +36,7 @@ const ProfessionalInformation = ({ formData, handleChange }) => {
             "
           />
 
-          <div className="mt-2 flex justify-between">
+          <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-gray-500">
               A short headline recruiters see first.
             </p>
@@ -81,7 +81,7 @@ const ProfessionalInformation = ({ formData, handleChange }) => {
             <option value="5+ Years">5+ Years</option>
           </select>
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Select your current professional experience.
           </p>
         </div>
@@ -115,7 +115,7 @@ const ProfessionalInformation = ({ formData, handleChange }) => {
             "
           />
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Mention your highest qualification.
           </p>
         </div>
@@ -151,7 +151,7 @@ const ProfessionalInformation = ({ formData, handleChange }) => {
             "
           />
 
-          <div className="mt-2 flex items-center justify-between">
+          <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-gray-500">
               Tell recruiters what makes you a strong candidate.
             </p>

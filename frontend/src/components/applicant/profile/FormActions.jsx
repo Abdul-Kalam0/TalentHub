@@ -1,11 +1,11 @@
 const FormActions = ({ loading, isEditing, setIsEditing }) => {
   return (
-    <section className="border-t border-gray-200 pt-10">
+    <section className="border-t border-gray-200 pt-8 sm:pt-10">
       <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
         {/* Left */}
 
         <div>
-          <h3 className="text-xl font-semibold text-gray-900">
+          <h3 className="text-lg font-semibold text-gray-900 sm:text-xl">
             {isEditing
               ? "Ready to save your profile?"
               : "Your profile is up to date"}
@@ -26,6 +26,7 @@ const FormActions = ({ loading, isEditing, setIsEditing }) => {
             disabled={loading}
             className="
               inline-flex
+              w-full
               items-center
               justify-center
               rounded-xl
@@ -42,6 +43,7 @@ const FormActions = ({ loading, isEditing, setIsEditing }) => {
               hover:shadow-md
               disabled:cursor-not-allowed
               disabled:opacity-60
+              md:w-auto
             "
           >
             {loading ? "Saving Changes..." : "Save Changes"}
@@ -52,6 +54,7 @@ const FormActions = ({ loading, isEditing, setIsEditing }) => {
             onClick={() => setIsEditing(true)}
             className="
               inline-flex
+              w-full
               items-center
               justify-center
               rounded-xl
@@ -66,6 +69,7 @@ const FormActions = ({ loading, isEditing, setIsEditing }) => {
               duration-200
               hover:bg-blue-700
               hover:shadow-md
+              md:w-auto
             "
           >
             Edit Profile

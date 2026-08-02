@@ -203,7 +203,17 @@ const ApplicantProfileForm = ({ profile }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-10 rounded-3xl border border-gray-200 bg-white p-10 shadow-sm"
+      className="
+  space-y-8
+  rounded-3xl
+  border
+  border-gray-200
+  bg-white
+  p-5
+  shadow-sm
+  sm:p-8
+  lg:p-10
+"
     >
       {/* Photo */}
       <PhotoSection

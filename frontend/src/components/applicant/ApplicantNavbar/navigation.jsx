@@ -3,7 +3,6 @@ import {
   Search,
   BriefcaseBusiness,
   Bookmark,
-  User,
 } from "lucide-react";
 
 const navigation = [
@@ -27,11 +26,6 @@ const navigation = [
     path: "/applicant/bookmarks",
     icon: Bookmark,
   },
-  // {
-  //   label: "Profile",
-  //   path: "/applicant/profile",
-  //   icon: User,
-  // },
 ];
 
 export default navigation;

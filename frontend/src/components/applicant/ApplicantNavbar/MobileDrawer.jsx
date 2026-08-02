@@ -29,18 +29,19 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
       {/* Drawer */}
 
       <aside
-        className={`fixed right-0 top-0 z-50 flex h-screen w-full max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
+        className={`fixed right-0 top-0 z-50 flex h-screen w-[88%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 lg:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
 
-        <div className="flex items-center justify-between border-b border-gray-200 p-6">
+        <div className="flex items-center justify-between border-b border-gray-200 p-4 sm:p-6">
           <Logo onClick={closeDrawer} />
 
           <button
             type="button"
             onClick={closeDrawer}
+            aria-label="Close menu"
             className="rounded-xl p-2 transition hover:bg-gray-100"
           >
             <X size={22} />
@@ -49,9 +50,9 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
 
         {/* User */}
 
-        <div className="border-b border-gray-100 p-6">
+        <div className="border-b border-gray-100 p-4 sm:p-6">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-blue-600 text-base font-bold text-white sm:h-14 sm:w-14 sm:text-lg">
               {initials}
             </div>
 
@@ -67,7 +68,7 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
 
         {/* Navigation */}
 
-        <nav className="flex-1 space-y-2 p-4">
+        <nav className="flex-1 space-y-2 overflow-y-auto p-4">
           {navigation.map((item) => {
             const Icon = item.icon;
 
@@ -84,9 +85,9 @@ const MobileDrawer = ({ user, isOpen, closeDrawer, handleLogout }) => {
                   }`
                 }
               >
-                <Icon size={18} />
+                <Icon size={18} className="shrink-0" />
 
-                {item.label}
+                <span className="truncate">{item.label}</span>
               </NavLink>
             );
           })}

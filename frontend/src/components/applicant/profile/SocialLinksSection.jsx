@@ -3,7 +3,7 @@ const SocialLinksSection = ({ socialLinks, handleChange }) => {
     <section>
       {/* Header */}
 
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-semibold tracking-tight text-gray-900">
             Social Links
@@ -14,12 +14,12 @@ const SocialLinksSection = ({ socialLinks, handleChange }) => {
           </p>
         </div>
 
-        <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600">
+        <span className="w-fit rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600">
           Optional
         </span>
       </div>
 
-      <div className="grid gap-7 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3">
         {/* GitHub */}
 
         <div>
@@ -49,7 +49,7 @@ const SocialLinksSection = ({ socialLinks, handleChange }) => {
             "
           />
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Share your public repositories.
           </p>
         </div>
@@ -83,7 +83,7 @@ const SocialLinksSection = ({ socialLinks, handleChange }) => {
             "
           />
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Let recruiters view your professional profile.
           </p>
         </div>
@@ -117,7 +117,7 @@ const SocialLinksSection = ({ socialLinks, handleChange }) => {
             "
           />
 
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs leading-5 text-gray-500">
             Showcase your portfolio or personal website.
           </p>
         </div>
@@ -125,7 +125,7 @@ const SocialLinksSection = ({ socialLinks, handleChange }) => {
 
       {/* Info Box */}
 
-      <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+      <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50 p-4 sm:p-5">
         <h3 className="text-sm font-semibold text-blue-800">
           Why add social links?
         </h3>

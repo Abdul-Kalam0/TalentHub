@@ -23,23 +23,28 @@ const ProfileDropdown = ({
       <button
         type="button"
         onClick={toggleDropdown}
-        className="flex items-center gap-3 rounded-2xl border border-gray-200 bg-white p-2 transition-all duration-200 hover:border-blue-200 hover:bg-gray-50"
+        className="
+          flex
+          items-center
+          gap-3
+          rounded-2xl
+          border
+          border-gray-200
+          bg-white
+          p-2
+          transition-all
+          duration-200
+          hover:border-blue-200
+          hover:bg-gray-50
+        "
       >
-        <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white xl:h-11 xl:w-11">
           {initials}
-        </div>
-
-        <div className="text-left">
-          {/* <h3 className="max-w-[160px] truncate text-sm font-semibold text-gray-900">
-            {user?.fullName}
-          </h3> */}
-
-          {/* <p className="text-xs text-gray-500">Applicant</p> */}
         </div>
 
         <ChevronDown
           size={18}
-          className={`transition-transform duration-200 ${
+          className={`shrink-0 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
         />
@@ -48,16 +53,29 @@ const ProfileDropdown = ({
       {/* Dropdown */}
 
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+        <div
+          className="
+            absolute
+            right-0
+            mt-3
+            w-72
+            overflow-hidden
+            rounded-2xl
+            border
+            border-gray-200
+            bg-white
+            shadow-xl
+          "
+        >
           {/* User Info */}
 
           <div className="border-b border-gray-100 bg-gray-50 p-5">
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
                 {initials}
               </div>
 
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <h3 className="truncate text-base font-semibold text-gray-900">
                   {user?.fullName}
                 </h3>
@@ -73,19 +91,46 @@ const ProfileDropdown = ({
             <Link
               to="/applicant/profile"
               onClick={closeDropdown}
-              className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-blue-50 hover:text-blue-600"
+              className="
+                flex
+                items-center
+                gap-3
+                rounded-xl
+                px-4
+                py-3
+                text-sm
+                font-medium
+                text-gray-700
+                transition
+                hover:bg-blue-50
+                hover:text-blue-600
+              "
             >
-              <UserRound size={18} />
-              Profile
+              <UserRound size={18} className="shrink-0" />
+              <span>Profile</span>
             </Link>
 
             <button
               type="button"
               onClick={handleLogout}
-              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium text-red-600 transition hover:bg-red-50"
+              className="
+                flex
+                w-full
+                items-center
+                gap-3
+                rounded-xl
+                px-4
+                py-3
+                text-left
+                text-sm
+                font-medium
+                text-red-600
+                transition
+                hover:bg-red-50
+              "
             >
-              <LogOut size={18} />
-              Logout
+              <LogOut size={18} className="shrink-0" />
+              <span>Logout</span>
             </button>
           </div>
         </div>
