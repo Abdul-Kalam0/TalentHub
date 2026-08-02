@@ -1,42 +1,66 @@
 import { Link } from "react-router-dom";
 
+import careerGrowth from "../../assets/auth/career-growth.png";
+
 const AuthBanner = ({ footerText, footerLink, footerLinkText }) => {
   return (
-    <section className="flex w-2/5 flex-col justify-between bg-blue-600 px-14 py-16 text-white">
-      <div>
-        {/* Logo */}
-        <h2 className="text-4xl font-bold tracking-tight">TalentHub</h2>
+    <section className="relative hidden min-h-screen overflow-hidden lg:flex lg:w-1/2">
+      {/* Background Image */}
 
-        {/* Hero Content */}
-        <div className="mt-20">
-          <h1 className="text-6xl font-bold leading-tight">
-            Find Your
-            <br />
-            Dream Job
+      <img
+        src={careerGrowth}
+        alt="Career Growth"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+
+      {/* Dark Overlay */}
+
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/40" />
+
+      {/* Content */}
+
+      <div className="relative z-10 flex h-full w-full flex-col justify-between p-12 text-white">
+        {/* Top */}
+
+        <div>
+          {/* Logo */}
+
+          <h1 className="text-4xl font-bold tracking-tight drop-shadow-lg">
+            TalentHub
           </h1>
 
-          <p className="mt-6 max-w-md text-lg leading-8 text-blue-100">
-            Connect with top companies, showcase your skills, and build your
-            future with TalentHub.
-          </p>
+          {/* Badge */}
+
+          <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/15 px-5 py-2 backdrop-blur-md">
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+
+            <span className="text-sm font-medium tracking-wide">
+              AI Recruitment Platform
+            </span>
+          </div>
         </div>
 
-        {/* CTA */}
-        <div className="mt-16">
-          <p className="text-blue-100">{footerText}</p>
+        {/* Bottom */}
+
+        <div>
+          <p className="text-lg text-white/90">{footerText}</p>
 
           <Link
             to={footerLink}
-            className="mt-3 inline-block font-semibold underline underline-offset-4 hover:text-blue-200 transition-colors"
+            className="
+              mt-3
+              inline-block
+              text-2xl
+              font-semibold
+              underline
+              underline-offset-4
+              transition-all
+              duration-200
+              hover:text-blue-200
+            "
           >
             {footerLinkText}
           </Link>
-        </div>
-      </div>
-
-      <div className="flex justify-center pt-10">
-        <div className="flex h-38 w-full max-w-sm items-center justify-center rounded-2xl border border-blue-400/40 bg-blue-500/20">
-          <span className="text-blue-100">Illustration</span>
         </div>
       </div>
     </section>
