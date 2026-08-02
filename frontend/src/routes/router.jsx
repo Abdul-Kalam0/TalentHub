@@ -23,6 +23,7 @@ import EditJobPage from "../pages/recruiter/EditJobPage";
 import RecruiterProfilePage from "../pages/recruiter/ProfilePage";
 import RecruiterSettingsPage from "../pages/recruiter/SettingsPage";
 import JobApplicantsPage from "../pages/recruiter/JobApplicantsPage";
+import ApplicantBookmarkPage from "../pages/applicant/BookmarksPage";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
           {
             path: "/applicant/applied-jobs",
             element: <AppliedJobsPage />,
+          },
+          {
+            path: "/applicant/bookmarks",
+            element: <ApplicantBookmarkPage />,
           },
           {
             path: "/applicant/profile",

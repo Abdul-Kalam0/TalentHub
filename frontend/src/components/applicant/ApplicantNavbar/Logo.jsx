@@ -10,10 +10,6 @@ const Logo = ({ onClick }) => {
       <h1 className="text-2xl font-bold tracking-tight text-blue-600 transition-colors duration-200 group-hover:text-blue-700">
         TalentHub
       </h1>
-
-      <p className="text-xs font-medium tracking-wide text-gray-500">
-        Applicant Portal
-      </p>
     </Link>
   );
 };

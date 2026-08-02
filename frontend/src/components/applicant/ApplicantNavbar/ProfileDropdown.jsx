@@ -30,11 +30,11 @@ const ProfileDropdown = ({
         </div>
 
         <div className="text-left">
-          <h3 className="max-w-[160px] truncate text-sm font-semibold text-gray-900">
+          {/* <h3 className="max-w-[160px] truncate text-sm font-semibold text-gray-900">
             {user?.fullName}
-          </h3>
+          </h3> */}
 
-          <p className="text-xs text-gray-500">Applicant</p>
+          {/* <p className="text-xs text-gray-500">Applicant</p> */}
         </div>
 
         <ChevronDown

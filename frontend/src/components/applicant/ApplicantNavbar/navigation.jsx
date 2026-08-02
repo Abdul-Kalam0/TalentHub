@@ -1,4 +1,10 @@
-import { LayoutDashboard, Search, BriefcaseBusiness, User } from "lucide-react";
+import {
+  LayoutDashboard,
+  Search,
+  BriefcaseBusiness,
+  Bookmark,
+  User,
+} from "lucide-react";
 
 const navigation = [
   {
@@ -15,6 +21,11 @@ const navigation = [
     label: "Applied Jobs",
     path: "/applicant/applied-jobs",
     icon: BriefcaseBusiness,
+  },
+  {
+    label: "Bookmarks",
+    path: "/applicant/bookmarks",
+    icon: Bookmark,
   },
   {
     label: "Profile",

@@ -1,15 +1,15 @@
 const PersonalInformation = ({ profile, formData, handleChange }) => {
   return (
     <section>
-      <h2 className="mb-6 text-2xl font-semibold text-gray-900">
+      <h2 className="mb-6 text-xl font-semibold tracking-tight text-gray-900">
         Personal Information
       </h2>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-7 md:grid-cols-2">
         {/* Full Name */}
 
         <div>
-          <label className="mb-2 block font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Full Name
           </label>
 
@@ -17,14 +17,25 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
             type="text"
             value={profile?.user?.fullName || ""}
             disabled
-            className="w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500"
+            className="
+              w-full
+              cursor-not-allowed
+              rounded-xl
+              border
+              border-gray-300
+              bg-gray-100
+              px-4
+              py-3
+              text-sm
+              text-gray-500
+            "
           />
         </div>
 
         {/* Email */}
 
         <div>
-          <label className="mb-2 block font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Email Address
           </label>
 
@@ -32,14 +43,25 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
             type="email"
             value={profile?.user?.email || ""}
             disabled
-            className="w-full cursor-not-allowed rounded-lg border border-gray-300 bg-gray-100 px-4 py-3 text-gray-500"
+            className="
+              w-full
+              cursor-not-allowed
+              rounded-xl
+              border
+              border-gray-300
+              bg-gray-100
+              px-4
+              py-3
+              text-sm
+              text-gray-500
+            "
           />
         </div>
 
         {/* Phone */}
 
         <div>
-          <label className="mb-2 block font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Phone Number <span className="text-red-500">*</span>
           </label>
 
@@ -51,11 +73,24 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
             maxLength={10}
             inputMode="numeric"
             autoComplete="tel"
-            placeholder="Enter your 10-digit phone number"
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            placeholder="Enter your mobile number"
+            className="
+              w-full
+              rounded-xl
+              border
+              border-gray-300
+              px-4
+              py-3
+              text-sm
+              outline-none
+              transition
+              focus:border-blue-500
+              focus:ring-4
+              focus:ring-blue-100
+            "
           />
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-xs text-gray-500">
             Enter a valid 10-digit mobile number.
           </p>
         </div>
@@ -63,7 +98,7 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
         {/* Current Location */}
 
         <div>
-          <label className="mb-2 block font-medium text-gray-700">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Current Location <span className="text-red-500">*</span>
           </label>
 
@@ -74,8 +109,25 @@ const PersonalInformation = ({ profile, formData, handleChange }) => {
             onChange={handleChange}
             autoComplete="address-level2"
             placeholder="e.g. Noida, Uttar Pradesh"
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            className="
+              w-full
+              rounded-xl
+              border
+              border-gray-300
+              px-4
+              py-3
+              text-sm
+              outline-none
+              transition
+              focus:border-blue-500
+              focus:ring-4
+              focus:ring-blue-100
+            "
           />
+
+          <p className="mt-2 text-xs text-gray-500">
+            Recruiters use your location to recommend nearby opportunities.
+          </p>
         </div>
       </div>
     </section>

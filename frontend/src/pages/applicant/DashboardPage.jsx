@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchApplicantProfile } from "../../redux/applicant/applicantThunks";
+import { fetchMyApplications } from "../../redux/applications/applicationsThunks";
 
 import DashboardHeader from "../../components/applicant/dashboard/DashboardHeader";
 import ProfileCard from "../../components/applicant/dashboard/ProfileCard";
@@ -13,8 +14,11 @@ const DashboardPage = () => {
 
   const { fetchLoading } = useSelector((state) => state.applicant);
 
+  const { myApplications } = useSelector((state) => state.applications);
+
   useEffect(() => {
     dispatch(fetchApplicantProfile());
+    dispatch(fetchMyApplications());
   }, [dispatch]);
 
   if (fetchLoading) {
@@ -42,7 +46,7 @@ const DashboardPage = () => {
       {/* Recent Applications */}
 
       <section className="mt-8">
-        <RecentApplications />
+        <RecentApplications applications={myApplications} />
       </section>
     </div>
   );

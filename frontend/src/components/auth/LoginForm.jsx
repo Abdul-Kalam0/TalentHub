@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useAuth } from "../../context/AuthContext";
@@ -11,10 +11,36 @@ const LoginForm = () => {
 
   const [loading, setLoading] = useState(false);
 
+  const [progress, setProgress] = useState(0);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  // =====================================
+  // Progress Bar Animation
+  // =====================================
+
+  useEffect(() => {
+    if (!loading) return;
+
+    setProgress(0);
+
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 95) return prev;
+
+        if (prev < 40) return prev + 5;
+        if (prev < 70) return prev + 3;
+        if (prev < 90) return prev + 2;
+
+        return prev + 1;
+      });
+    }, 80);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,19 +62,71 @@ const LoginForm = () => {
       setLoading(true);
 
       const result = await login(formData);
-      console.log(result);
 
       if (result.success) {
-        if (result.user.role === "applicant") {
-          navigate("/applicant/dashboard", { replace: true });
-        } else if (result.user.role === "recruiter") {
-          navigate("/recruiter/dashboard", { replace: true });
-        }
+        setProgress(100);
+
+        setTimeout(() => {
+          if (result.user.role === "applicant") {
+            navigate("/applicant/dashboard", {
+              replace: true,
+            });
+          } else if (result.user.role === "recruiter") {
+            navigate("/recruiter/dashboard", {
+              replace: true,
+            });
+          }
+        }, 300);
+      } else {
+        setLoading(false);
       }
-    } finally {
+    } catch (error) {
       setLoading(false);
     }
   };
+
+  // =====================================
+  // Full Page Loader
+  // =====================================
+
+  if (loading) {
+    return (
+      <section className="flex min-h-screen w-full items-center justify-center bg-gray-50 px-6">
+        <div className="w-full max-w-md text-center">
+          {/* Logo */}
+
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-600 shadow-xl">
+            <span className="text-2xl font-bold text-white">TH</span>
+          </div>
+
+          {/* Heading */}
+
+          <h1 className="mt-8 text-4xl font-bold text-gray-900">
+            Welcome back!
+          </h1>
+
+          <p className="mt-3 text-lg text-gray-500">
+            Preparing your TalentHub workspace...
+          </p>
+
+          {/* Progress */}
+
+          <div className="mt-10 h-3 overflow-hidden rounded-full bg-gray-200">
+            <div
+              className="h-full rounded-full bg-blue-600 transition-all duration-300 ease-out"
+              style={{
+                width: `${progress}%`,
+              }}
+            />
+          </div>
+
+          <p className="mt-4 text-sm font-semibold text-gray-600">
+            {progress}%
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="flex w-3/5 justify-center p-12">
@@ -92,37 +170,14 @@ const LoginForm = () => {
               <input type="checkbox" className="h-4 w-4" />
               Remember Me
             </label>
-
-            {/* <Link
-              to="/forgot-password"
-              className="text-sm font-medium text-blue-600 hover:underline"
-            >
-              Forgot Password?
-            </Link> */}
           </div>
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition-all duration-200 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition-all duration-200 hover:bg-blue-700"
           >
-            {loading ? "Logging In..." : "Login"}
+            Login
           </button>
-
-          {/* <div className="flex items-center gap-4">
-            <div className="h-px flex-1 bg-gray-300"></div>
-
-            <span className="text-sm text-gray-500">OR</span>
-
-            <div className="h-px flex-1 bg-gray-300"></div>
-          </div> */}
-
-          {/* <button
-            type="button"
-            className="w-full rounded-lg border py-3 font-semibold transition hover:bg-gray-50"
-          >
-            Continue with Google
-          </button> */}
         </form>
       </div>
     </section>

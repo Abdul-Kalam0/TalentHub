@@ -7,7 +7,12 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  // Initial auth check (app startup)
   const [loading, setLoading] = useState(true);
+
+  // Login animation state
+  const [authenticating, setAuthenticating] = useState(false);
 
   // =============================
   // Get Current User
@@ -57,6 +62,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (formData) => {
     try {
+      setAuthenticating(true);
+
       const { data } = await api.post("/auth/login", formData);
 
       const currentUser = await getCurrentUser();
@@ -74,6 +81,8 @@ export const AuthProvider = ({ children }) => {
         success: false,
         user: null,
       };
+    } finally {
+      setAuthenticating(false);
     }
   };
 
@@ -110,6 +119,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         loading,
+        authenticating,
         register,
         login,
         logout,

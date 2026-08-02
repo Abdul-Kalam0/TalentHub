@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchApplicantProfile } from "../../redux/applicant/applicantThunks";
 
 import ApplicantProfileForm from "../../components/applicant/profile/ApplicantProfileForm";
+import LoadingProfile from "../../components/applicant/profile/LoadingProfile";
+import EmptyProfile from "../../components/applicant/profile/EmptyProfile";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -15,11 +17,11 @@ const ProfilePage = () => {
   }, [dispatch]);
 
   if (fetchLoading) {
-    return (
-      <div className="flex min-h-[70vh] items-center justify-center">
-        <p className="text-lg font-medium text-gray-600">Loading profile...</p>
-      </div>
-    );
+    return <LoadingProfile />;
+  }
+
+  if (!profile) {
+    return <EmptyProfile />;
   }
 
   return (

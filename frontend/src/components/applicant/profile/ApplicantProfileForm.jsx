@@ -13,6 +13,7 @@ import ResumeSection from "./ResumeSection";
 import PersonalInformation from "./PersonalInformation";
 import ProfessionalInformation from "./ProfessionalInformation";
 import SkillsSection from "./SkillsSection";
+import ProjectsSection from "./ProjectsSection";
 import SocialLinksSection from "./SocialLinksSection";
 import FormActions from "./FormActions";
 
@@ -31,6 +32,7 @@ const ApplicantProfileForm = ({ profile }) => {
     education: "",
     currentLocation: "",
     skills: [],
+    projects: [],
     socialLinks: {
       github: "",
       linkedin: "",
@@ -39,30 +41,46 @@ const ApplicantProfileForm = ({ profile }) => {
   });
 
   const [skill, setSkill] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+
+  // ==========================================
+  // Populate Form
+  // ==========================================
 
   useEffect(() => {
-    if (profile) {
-      setFormData({
-        headline: profile.headline || "",
-        bio: profile.bio || "",
-        phone: profile.phone || "",
-        experience: profile.experience || "",
-        education: profile.education || "",
-        currentLocation: profile.currentLocation || "",
-        skills: profile.skills || [],
-        socialLinks: {
-          github: profile.socialLinks?.github || "",
-          linkedin: profile.socialLinks?.linkedin || "",
-          portfolio: profile.socialLinks?.portfolio || "",
-        },
-      });
-    }
+    if (!profile) return;
+
+    setFormData({
+      headline: profile.headline || "",
+      bio: profile.bio || "",
+      phone: profile.phone || "",
+      experience: profile.experience || "",
+      education: profile.education || "",
+      currentLocation: profile.currentLocation || "",
+      skills: profile.skills || [],
+
+      // Technologies remain arrays
+      projects:
+        profile.projects?.map((project) => ({
+          ...project,
+          technologies: project.technologies || [],
+        })) || [],
+
+      socialLinks: {
+        github: profile.socialLinks?.github || "",
+        linkedin: profile.socialLinks?.linkedin || "",
+        portfolio: profile.socialLinks?.portfolio || "",
+      },
+    });
   }, [profile]);
+
+  // ==========================================
+  // Input Change
+  // ==========================================
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // Phone accepts only digits and max 10 characters
     if (name === "phone") {
       const phone = value.replace(/\D/g, "").slice(0, 10);
 
@@ -80,6 +98,10 @@ const ApplicantProfileForm = ({ profile }) => {
     }));
   };
 
+  // ==========================================
+  // Social Links
+  // ==========================================
+
   const handleSocialChange = (event) => {
     const { name, value } = event.target;
 
@@ -92,6 +114,10 @@ const ApplicantProfileForm = ({ profile }) => {
     }));
   };
 
+  // ==========================================
+  // Upload Photo
+  // ==========================================
+
   const handlePhotoUpload = async (file) => {
     try {
       await dispatch(uploadApplicantPhoto(file)).unwrap();
@@ -102,6 +128,10 @@ const ApplicantProfileForm = ({ profile }) => {
     }
   };
 
+  // ==========================================
+  // Upload Resume
+  // ==========================================
+
   const handleResumeUpload = async (file) => {
     try {
       await dispatch(uploadApplicantResume(file)).unwrap();
@@ -111,6 +141,10 @@ const ApplicantProfileForm = ({ profile }) => {
       toast.error(error || "Failed to upload resume.");
     }
   };
+
+  // ==========================================
+  // Submit
+  // ==========================================
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -123,13 +157,11 @@ const ApplicantProfileForm = ({ profile }) => {
       return toast.error("Please upload your resume.");
     }
 
-    const phone = formData.phone.trim();
-
-    if (!phone) {
+    if (!formData.phone.trim()) {
       return toast.error("Phone number is required.");
     }
 
-    if (phone.length !== 10) {
+    if (formData.phone.length !== 10) {
       return toast.error("Phone number must be exactly 10 digits.");
     }
 
@@ -149,56 +181,73 @@ const ApplicantProfileForm = ({ profile }) => {
       return toast.error("Please add at least one skill.");
     }
 
+    const payload = {
+      ...formData,
+
+      projects: formData.projects.map((project) => ({
+        ...project,
+        technologies: project.technologies || [],
+      })),
+    };
+
     try {
-      await dispatch(updateApplicantProfile(formData)).unwrap();
+      await dispatch(updateApplicantProfile(payload)).unwrap();
 
       toast.success("Profile updated successfully.");
+
+      setIsEditing(false);
     } catch (error) {
       toast.error(error || "Something went wrong.");
     }
   };
-
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-8 rounded-xl border border-gray-200 bg-white p-8 shadow-sm"
+      className="space-y-10 rounded-3xl border border-gray-200 bg-white p-10 shadow-sm"
     >
+      {/* Photo */}
       <PhotoSection
         photo={profile?.photo}
         loading={photoLoading}
         onUpload={handlePhotoUpload}
       />
-
-      <ResumeSection
-        resume={profile?.resume}
-        loading={resumeLoading}
-        onUpload={handleResumeUpload}
-      />
-
+      {/* Personal Information */}
       <PersonalInformation
         profile={profile}
         formData={formData}
         handleChange={handleChange}
       />
-
+      {/* Professional Information */}
       <ProfessionalInformation
         formData={formData}
         handleChange={handleChange}
       />
-
+      {/* Skills */}
       <SkillsSection
         formData={formData}
         setFormData={setFormData}
         skill={skill}
         setSkill={setSkill}
       />
-
+      {/* Projects */}
+      <ProjectsSection formData={formData} setFormData={setFormData} />
+      {/* Resume */}
+      <ResumeSection
+        resume={profile?.resume}
+        loading={resumeLoading}
+        onUpload={handleResumeUpload}
+      />
+      {/* Social Links */}
       <SocialLinksSection
         socialLinks={formData.socialLinks}
         handleChange={handleSocialChange}
       />
-
-      <FormActions loading={updateLoading} />
+      {/* Save Button */}
+      <FormActions
+        loading={updateLoading}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />{" "}
     </form>
   );
 };
