@@ -22,6 +22,7 @@ import jobRoutes from "./routes/job.routes.js";
 import applicationRoutes from "./routes/application.routes.js";
 import dashboardRoutes from "./routes/dashboard.routes.js";
 import bookmarkRoutes from "./routes/bookmark.routes.js";
+import aiRoutes from "./routes/ai.routes.js";
 import errorHandler from "./middlewares/error.middleware.js";
 
 app.get("/", (req, res) => {
@@ -48,6 +49,9 @@ app.use("/api", dashboardRoutes);
 
 //Bookmark
 app.use("/api", bookmarkRoutes);
+
+//AI
+app.use("/api", aiRoutes);
 
 //Global error handler
 app.use(errorHandler);
