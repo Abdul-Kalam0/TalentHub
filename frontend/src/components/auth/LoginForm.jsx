@@ -19,9 +19,9 @@ const LoginForm = () => {
     password: "",
   });
 
-  // ============================================
-  // Loading Progress Animation
-  // ============================================
+  // =====================================
+  // Progress Animation
+  // =====================================
 
   useEffect(() => {
     if (!loading) return;
@@ -29,38 +29,38 @@ const LoginForm = () => {
     setProgress(0);
 
     const interval = setInterval(() => {
-      setProgress((previous) => {
-        if (previous >= 95) return previous;
+      setProgress((prev) => {
+        if (prev >= 95) return prev;
 
-        if (previous < 40) return previous + 5;
+        if (prev < 40) return prev + 5;
 
-        if (previous < 70) return previous + 3;
+        if (prev < 70) return prev + 3;
 
-        if (previous < 90) return previous + 2;
+        if (prev < 90) return prev + 2;
 
-        return previous + 1;
+        return prev + 1;
       });
     }, 80);
 
     return () => clearInterval(interval);
   }, [loading]);
 
-  // ============================================
-  // Handle Input Change
-  // ============================================
+  // =====================================
+  // Handle Input
+  // =====================================
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setFormData((previous) => ({
-      ...previous,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
   };
 
-  // ============================================
-  // Handle Login
-  // ============================================
+  // =====================================
+  // Login
+  // =====================================
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,7 +86,7 @@ const LoginForm = () => {
               replace: true,
             },
           );
-        }, 400);
+        }, 350);
       } else {
         setLoading(false);
       }
@@ -95,33 +95,27 @@ const LoginForm = () => {
     }
   };
 
-  // ============================================
-  // Full Page Loader
-  // ============================================
+  // =====================================
+  // Loading Screen
+  // =====================================
 
   if (loading) {
     return (
-      <section className="flex flex-1 items-center justify-center px-6">
-        <div className="w-full max-w-md rounded-[32px] border border-white/40 bg-white/90 p-10 shadow-[0_25px_80px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-          {/* Logo */}
-
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-blue-600 shadow-lg">
-            <span className="text-2xl font-bold text-white">TH</span>
+      <section className="flex flex-1 items-center justify-center px-5">
+        <div className="w-full max-w-sm rounded-3xl bg-white/95 p-8 shadow-2xl backdrop-blur-xl">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
+            <span className="text-xl font-bold text-white">TH</span>
           </div>
 
-          {/* Heading */}
-
-          <h2 className="mt-8 text-center text-3xl font-bold text-slate-900">
-            Signing You In
+          <h2 className="mt-6 text-center text-2xl font-bold text-slate-900">
+            Signing In
           </h2>
 
-          <p className="mt-3 text-center text-slate-500">
-            Preparing your TalentHub workspace...
+          <p className="mt-2 text-center text-sm text-slate-500">
+            Preparing your workspace...
           </p>
 
-          {/* Progress */}
-
-          <div className="mt-10 h-3 overflow-hidden rounded-full bg-slate-200">
+          <div className="mt-8 h-2 overflow-hidden rounded-full bg-slate-200">
             <div
               className="h-full rounded-full bg-blue-600 transition-all duration-300"
               style={{
@@ -130,108 +124,127 @@ const LoginForm = () => {
             />
           </div>
 
-          <div className="mt-5 flex items-center justify-center gap-2 text-sm font-medium text-slate-600">
-            <Loader2 size={18} className="animate-spin" />
-            {progress}% Completed
+          <div className="mt-4 flex items-center justify-center gap-2 text-sm text-slate-600">
+            <Loader2 size={16} className="animate-spin" />
+            {progress}%
           </div>
         </div>
       </section>
     );
   }
+
   return (
     <section
       className="
         flex
+        h-full
         flex-1
         items-center
         justify-center
-        px-6
-        py-10
+        px-4
+        py-4
+        sm:px-6
+        md:px-8
         lg:justify-end
         lg:px-16
-        xl:px-24
+        xl:px-20
       "
     >
-      <div className="w-full max-w-md">
-        {/* Mobile Branding */}
-
-        <div className="mb-10 text-center lg:hidden">
-          <h1 className="text-4xl font-bold text-white">TalentHub</h1>
-
-          <p className="mt-3 text-white/80">AI Recruitment Platform</p>
-        </div>
-
-        {/* Glass Card */}
-
+      <div
+        className="
+          w-full
+          max-w-sm
+          lg:max-w-[430px]
+        "
+      >
         <div
           className="
-            rounded-[32px]
+            rounded-3xl
             border
             border-white/30
-            bg-white/85
-            p-8
-            shadow-[0_30px_80px_rgba(0,0,0,0.25)]
-            backdrop-blur-2xl
-            sm:p-10
+            bg-white/95
+            p-5
+            shadow-[0_25px_70px_rgba(0,0,0,0.18)]
+            backdrop-blur-xl
+            sm:p-6
+            lg:rounded-[30px]
+            lg:p-8
           "
         >
-          {/* Header */}
+          {/* Mobile Branding */}
 
-          <div>
-            <span className="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600">
+          <div className="mb-5 text-center lg:hidden">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 shadow-lg">
+              <span className="text-lg font-bold text-white">TH</span>
+            </div>
+
+            <h1 className="mt-4 text-2xl font-bold text-slate-900 sm:text-3xl">
+              Welcome Back
+            </h1>
+
+            <p className="mt-2 text-sm text-slate-500">Sign in to continue.</p>
+          </div>
+
+          {/* Desktop Heading */}
+
+          <div className="hidden lg:block">
+            <span className="inline-flex rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-600">
               Welcome Back
             </span>
 
-            <h1 className="mt-6 text-4xl font-bold text-slate-900">
+            <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-900">
               Sign in to TalentHub
             </h1>
 
-            <p className="mt-3 leading-7 text-slate-500">
-              Access your dashboard, applications and discover your next career
-              opportunity.
+            <p className="mt-3 text-base leading-7 text-slate-500">
+              Access your dashboard and manage your career journey.
             </p>
           </div>
 
           {/* Form */}
 
-          <form onSubmit={handleSubmit} className="mt-10 space-y-6">
+          <form
+            onSubmit={handleSubmit}
+            className="mt-6 space-y-4 lg:mt-8 lg:space-y-5"
+          >
             {/* Email */}
 
             <div>
-              <label className="mb-3 block text-sm font-semibold text-slate-700">
-                Email Address
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
+                Email
               </label>
 
               <div className="relative">
                 <Mail
-                  size={20}
-                  className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"
+                  size={18}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                 />
 
                 <input
                   type="email"
                   name="email"
-                  autoComplete="email"
-                  placeholder="john@example.com"
                   value={formData.email}
                   onChange={handleChange}
+                  autoComplete="email"
+                  placeholder="john@example.com"
                   className="
                     w-full
                     rounded-2xl
                     border
                     border-slate-300
                     bg-white
-                    py-4
-                    pl-14
-                    pr-5
-                    text-slate-700
+                    py-3
+                    pl-12
+                    pr-4
+                    text-sm
                     outline-none
                     transition-all
-                    duration-200
                     placeholder:text-slate-400
                     focus:border-blue-600
                     focus:ring-4
                     focus:ring-blue-100
+                    lg:py-3.5
+                    lg:text-base
                   "
                   required
                 />
@@ -241,58 +254,51 @@ const LoginForm = () => {
             {/* Password */}
 
             <div>
-              <label className="mb-3 block text-sm font-semibold text-slate-700">
+              <label className="mb-2 block text-sm font-semibold text-slate-700">
                 Password
               </label>
 
               <div className="relative">
                 <Lock
-                  size={20}
-                  className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"
+                  size={18}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                 />
 
                 <input
                   type={showPassword ? "text" : "password"}
                   name="password"
-                  autoComplete="current-password"
-                  placeholder="Enter your password"
                   value={formData.password}
                   onChange={handleChange}
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
                   className="
                     w-full
                     rounded-2xl
                     border
                     border-slate-300
                     bg-white
-                    py-4
-                    pl-14
-                    pr-14
-                    text-slate-700
+                    py-3
+                    pl-12
+                    pr-12
+                    text-sm
                     outline-none
                     transition-all
-                    duration-200
                     placeholder:text-slate-400
                     focus:border-blue-600
                     focus:ring-4
                     focus:ring-blue-100
+                    lg:py-3.5
+                    lg:text-base
                   "
                   required
                 />
 
                 <button
                   type="button"
-                  onClick={() => setShowPassword((previous) => !previous)}
-                  className="
-                    absolute
-                    right-5
-                    top-1/2
-                    -translate-y-1/2
-                    text-slate-400
-                    transition-colors
-                    hover:text-slate-700
-                  "
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-700"
                 >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
@@ -303,7 +309,6 @@ const LoginForm = () => {
               disabled={loading}
               className="
                 group
-                mt-2
                 flex
                 w-full
                 items-center
@@ -311,60 +316,79 @@ const LoginForm = () => {
                 gap-2
                 rounded-2xl
                 bg-blue-600
-                px-6
-                py-4
-                text-lg
+                py-3
+                text-sm
                 font-semibold
                 text-white
                 shadow-lg
                 transition-all
                 duration-300
-                hover:-translate-y-1
+                hover:-translate-y-0.5
                 hover:bg-blue-700
-                hover:shadow-2xl
+                hover:shadow-xl
+                lg:py-3.5
+                lg:text-base
                 disabled:cursor-not-allowed
                 disabled:opacity-70
               "
             >
               Login
               <ArrowRight
-                size={20}
+                size={18}
                 className="transition-transform duration-300 group-hover:translate-x-1"
               />
             </button>
           </form>
 
-          {/* Divider */}
+          {/* Desktop Divider */}
 
-          <div className="my-10 flex items-center">
+          <div className="mt-6 hidden items-center lg:flex">
             <div className="h-px flex-1 bg-slate-200" />
 
-            <span className="px-4 text-sm font-medium text-slate-400">
+            <span className="px-4 text-xs font-medium uppercase tracking-wider text-slate-400">
               Secure Authentication
             </span>
 
             <div className="h-px flex-1 bg-slate-200" />
           </div>
 
-          {/* Footer */}
+          {/* Desktop Footer */}
 
-          {/* Mobile Signup */}
+          <div className="mt-5 hidden space-y-2 lg:block">
+            <p className="text-sm leading-6 text-slate-500">
+              Manage your applications, track interviews and connect with
+              recruiters securely through TalentHub.
+            </p>
 
-          <div className="mt-10 border-t border-slate-200 pt-6 text-center lg:hidden">
-            <p className="text-slate-500">Don't have an account?</p>
+            <p className="text-xs text-slate-400">
+              Protected with encrypted sessions.
+            </p>
+          </div>
+
+          {/* Mobile Footer */}
+
+          <div className="mt-5 border-t border-slate-200 pt-4 text-center lg:hidden">
+            <p className="text-sm text-slate-500">Don't have an account?</p>
 
             <button
               type="button"
               onClick={() => navigate("/signup")}
               className="
                 mt-2
+                inline-flex
+                items-center
+                gap-2
+                text-sm
                 font-semibold
                 text-blue-600
-                transition-colors
+                transition-all
+                duration-200
+                hover:gap-3
                 hover:text-blue-700
               "
             >
               Create Account
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>

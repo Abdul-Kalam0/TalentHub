@@ -6,24 +6,20 @@ import careerGrowth from "../../assets/auth/career-growth.png";
 
 const LoginPage = () => {
   return (
-    <main className="relative min-h-screen overflow-hidden">
+    <main className="relative h-dvh overflow-hidden">
+      {" "}
       {/* Background Image */}
-
       <img
         src={careerGrowth}
         alt="Career Growth"
         className="absolute inset-0 h-full w-full object-cover"
       />
-
       {/* Overlay */}
-
       <div className="absolute inset-0 bg-black/25" />
-
       {/* Content */}
-
-      <div className="relative z-10 flex min-h-screen">
+      <div className="relative z-10 flex h-full">
+        {" "}
         {/* Left Branding */}
-
         <div className="hidden w-1/2 flex-col justify-between p-12 text-white lg:flex">
           <div>
             <h1 className="text-5xl font-bold tracking-tight">TalentHub</h1>
@@ -53,9 +49,7 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-
         {/* Login */}
-
         <LoginForm />
       </div>
     </main>
