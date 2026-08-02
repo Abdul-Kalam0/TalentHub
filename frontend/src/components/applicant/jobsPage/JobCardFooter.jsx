@@ -4,10 +4,10 @@ import { formatDistanceToNow } from "date-fns";
 
 const JobCardFooter = ({ job }) => {
   return (
-    <div className="flex items-center justify-between border-t border-gray-100 p-5">
+    <div className="mt-auto flex items-center justify-between border-t border-gray-100 bg-gray-50 px-5 py-4">
       {/* Posted Time */}
 
-      <p className="text-sm text-gray-500">
+      <p className="text-sm font-medium text-gray-500">
         Posted{" "}
         {formatDistanceToNow(new Date(job.createdAt), {
           addSuffix: true,
@@ -18,10 +18,24 @@ const JobCardFooter = ({ job }) => {
 
       <Link
         to={`/applicant/jobs/${job._id}`}
-        className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+        className="
+          inline-flex
+          items-center
+          gap-2
+          rounded-lg
+          px-3
+          py-2
+          text-sm
+          font-semibold
+          text-blue-600
+          transition-all
+          duration-200
+          hover:bg-blue-50
+          hover:text-blue-700
+        "
       >
         View Details
-        <ArrowRight size={18} />
+        <ArrowRight size={16} />
       </Link>
     </div>
   );

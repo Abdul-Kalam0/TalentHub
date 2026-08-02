@@ -27,11 +27,11 @@ const navigation = [
     path: "/applicant/bookmarks",
     icon: Bookmark,
   },
-  {
-    label: "Profile",
-    path: "/applicant/profile",
-    icon: User,
-  },
+  // {
+  //   label: "Profile",
+  //   path: "/applicant/profile",
+  //   icon: User,
+  // },
 ];
 
 export default navigation;

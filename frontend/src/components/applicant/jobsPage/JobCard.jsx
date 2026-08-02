@@ -14,7 +14,6 @@ const JobCard = ({ job, bookmark }) => {
   const dispatch = useDispatch();
 
   const handleBookmark = async () => {
-    console.log("Bookmark clicked");
     try {
       if (bookmark) {
         await dispatch(deleteBookmark(bookmark._id)).unwrap();
@@ -31,7 +30,23 @@ const JobCard = ({ job, bookmark }) => {
   };
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+    <article
+      className="
+        flex
+        h-full
+        flex-col
+        overflow-hidden
+        rounded-2xl
+        border
+        border-gray-200
+        bg-white
+        shadow-sm
+        transition-all
+        duration-300
+        hover:-translate-y-1
+        hover:shadow-lg
+      "
+    >
       {/* Header */}
 
       <JobCardHeader
@@ -47,7 +62,7 @@ const JobCard = ({ job, bookmark }) => {
       {/* Footer */}
 
       <JobCardFooter job={job} />
-    </div>
+    </article>
   );
 };
 
