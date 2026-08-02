@@ -2,9 +2,11 @@ const WorkplaceTypeFilter = ({ filters, setFilters }) => {
   const workplaceTypes = ["Remote", "Hybrid", "On-site"];
 
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      workplaceType: event.target.value,
+      workplaceType: value,
       page: 1,
     }));
   };

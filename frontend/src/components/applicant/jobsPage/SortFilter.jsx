@@ -19,9 +19,11 @@ const SortFilter = ({ filters, setFilters }) => {
   ];
 
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      sort: event.target.value,
+      sort: value,
       page: 1,
     }));
   };

@@ -27,9 +27,11 @@ const SalaryFilter = ({ filters, setFilters }) => {
   ];
 
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      salary: event.target.value,
+      salary: value,
       page: 1,
     }));
   };

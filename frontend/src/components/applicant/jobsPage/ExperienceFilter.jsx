@@ -8,9 +8,11 @@ const ExperienceFilter = ({ filters, setFilters }) => {
   ];
 
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      experience: event.target.value,
+      experience: value,
       page: 1,
     }));
   };

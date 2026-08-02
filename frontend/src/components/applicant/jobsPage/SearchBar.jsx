@@ -1,8 +1,10 @@
 const SearchBar = ({ filters, setFilters }) => {
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      search: event.target.value,
+      search: value,
       page: 1,
     }));
   };

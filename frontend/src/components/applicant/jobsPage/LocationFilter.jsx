@@ -1,8 +1,10 @@
 const LocationFilter = ({ filters, setFilters }) => {
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      location: event.target.value,
+      location: value,
       page: 1,
     }));
   };

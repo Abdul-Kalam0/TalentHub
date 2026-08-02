@@ -1,10 +1,17 @@
 const EmploymentTypeFilter = ({ filters, setFilters }) => {
-  const employmentTypes = ["Full-time", "Part-time", "Internship", "Contract"];
+  const employmentTypes = [
+    "Full-time",
+    "Part-time",
+    "Internship",
+    "Contract",
+  ];
 
   const handleChange = (event) => {
+    const value = event.target.value;
+
     setFilters((previous) => ({
       ...previous,
-      employmentType: event.target.value,
+      employmentType: value,
       page: 1,
     }));
   };

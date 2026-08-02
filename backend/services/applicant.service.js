@@ -20,7 +20,7 @@ export const updateApplicantProfileService = async (userId, updateData) => {
     { user: userId },
     updateData,
     {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     },
   ).populate("user", "fullName email role");
