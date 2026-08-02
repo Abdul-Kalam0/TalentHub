@@ -4,6 +4,9 @@ import {
   deleteBookmarkService,
 } from "../services/bookmark.service.js";
 
+// ==========================
+// Create Bookmark
+// ==========================
 export const createBookmark = async (req, res, next) => {
   try {
     const bookmark = await createBookmarkService(
@@ -13,7 +16,7 @@ export const createBookmark = async (req, res, next) => {
 
     return res.status(201).json({
       success: true,
-      message: "Job bookmarked successfully",
+      message: "Job bookmarked successfully.",
       data: bookmark,
     });
   } catch (error) {
@@ -21,13 +24,16 @@ export const createBookmark = async (req, res, next) => {
   }
 };
 
+// ==========================
+// Get My Bookmarks
+// ==========================
 export const getMyBookmarks = async (req, res, next) => {
   try {
     const bookmarks = await getMyBookmarksService(req.user._id);
 
     return res.status(200).json({
       success: true,
-      message: "Bookmarks fetched successfully",
+      message: "Bookmarks fetched successfully.",
       data: bookmarks,
     });
   } catch (error) {
@@ -35,6 +41,9 @@ export const getMyBookmarks = async (req, res, next) => {
   }
 };
 
+// ==========================
+// Delete Bookmark
+// ==========================
 export const deleteBookmark = async (req, res, next) => {
   try {
     const deletedBookmark = await deleteBookmarkService(
@@ -44,7 +53,7 @@ export const deleteBookmark = async (req, res, next) => {
 
     return res.status(200).json({
       success: true,
-      message: "Bookmark removed successfully",
+      message: "Bookmark removed successfully.",
       data: deletedBookmark,
     });
   } catch (error) {
