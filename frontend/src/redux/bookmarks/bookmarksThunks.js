@@ -6,9 +6,16 @@ import api from "../../services/api";
 // ==========================
 export const fetchBookmarks = createAsyncThunk(
   "bookmarks/fetchBookmarks",
-  async () => {
-    const response = await api.get("/bookmarks");
-    return response.data.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/bookmarks");
+
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch bookmarks",
+      );
+    }
   },
 );
 
@@ -17,9 +24,16 @@ export const fetchBookmarks = createAsyncThunk(
 // ==========================
 export const createBookmark = createAsyncThunk(
   "bookmarks/createBookmark",
-  async (jobId) => {
-    const response = await api.post(`/jobs/${jobId}/bookmark`);
-    return response.data.data;
+  async (jobId, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/jobs/${jobId}/bookmark`);
+
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to bookmark job",
+      );
+    }
   },
 );
 
@@ -28,8 +42,15 @@ export const createBookmark = createAsyncThunk(
 // ==========================
 export const deleteBookmark = createAsyncThunk(
   "bookmarks/deleteBookmark",
-  async (bookmarkId) => {
-    await api.delete(`/bookmarks/${bookmarkId}`);
-    return bookmarkId;
+  async (bookmarkId, { rejectWithValue }) => {
+    try {
+      const response = await api.delete(`/bookmarks/${bookmarkId}`);
+
+      return response.data.data._id;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to remove bookmark",
+      );
+    }
   },
 );
