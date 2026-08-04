@@ -478,12 +478,6 @@ Generates
 ---
 
 # 📸 Screenshots
-## 👤 Applicant Dashboard
-
-![Dashboard](./screenshots/Dashboard.png)
-
----
-
 ## 🔐 Login
 
 ![Login](./screenshots/Login.png)
@@ -493,6 +487,12 @@ Generates
 ## 📝 Register
 
 ![Register](./screenshots/Register.png)
+
+---
+
+## 👤 Applicant Dashboard
+
+![Dashboard](./screenshots/Dashboard.png)
 
 ---
 
