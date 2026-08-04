@@ -37,16 +37,6 @@ Built with **React**, **Redux Toolkit**, **Node.js**, **Express.js**, **MongoDB*
 
 ---
 
-# 🎥 Demo Video
-
-Watch the complete walkthrough of TalentHub.
-
-**Demo Video**
-
-https://your-demo-video-link.com
-
----
-
 # ⚡ Quick Start
 
 Clone the repositories.
