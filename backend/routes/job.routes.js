@@ -1,6 +1,7 @@
 import express from "express";
 import validate from "../middlewares/validate.middleware.js";
 import {
+  bulkCreateJobsValidation,
   createJobSchema,
   updateJobSchema,
 } from "../validation/job.validation.js";
@@ -9,6 +10,7 @@ import { authorize } from "../middlewares/authorize.middleware.js";
 import { ROLES } from "../constants/roles.js";
 import {
   archiveJob,
+  bulkCreateJobs,
   createJob,
   deleteJob,
   getAllJobs,
@@ -18,6 +20,15 @@ import {
   updateJob,
 } from "../controllers/job.controller.js";
 const router = express.Router();
+
+//Seed bulk jobs
+router.post(
+  "/bulk",
+  authenticate,
+  authorize("recruiter"),
+  validate(bulkCreateJobsValidation),
+  bulkCreateJobs,
+);
 
 //Recruiter routes
 router.post(

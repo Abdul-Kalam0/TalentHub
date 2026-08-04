@@ -131,3 +131,56 @@ export const updateJobSchema = Joi.object({
 
   openings: Joi.number().integer().min(1),
 }).min(1);
+
+const singleJobValidation = Joi.object({
+  title: Joi.string().trim().required().messages({
+    "string.empty": "Job title is required.",
+    "any.required": "Job title is required.",
+  }),
+
+  description: Joi.string().trim().required().messages({
+    "string.empty": "Job description is required.",
+    "any.required": "Job description is required.",
+  }),
+
+  location: Joi.string().trim().required().messages({
+    "string.empty": "Location is required.",
+    "any.required": "Location is required.",
+  }),
+
+  workplaceType: Joi.string().valid("Remote", "Hybrid", "On-site").required(),
+
+  employmentType: Joi.string()
+    .valid("Full-time", "Part-time", "Internship", "Contract")
+    .required(),
+
+  experience: Joi.string()
+    .valid("Fresher", "0-1 Years", "1-3 Years", "3-5 Years", "5+ Years")
+    .required(),
+
+  salary: Joi.object({
+    min: Joi.number().min(1).required(),
+
+    max: Joi.number().greater(Joi.ref("min")).required(),
+  }).required(),
+
+  applicationDeadline: Joi.date().required(),
+
+  skills: Joi.array().items(Joi.string().trim()).min(1).required(),
+
+  responsibilities: Joi.array().items(Joi.string().trim()).min(1).required(),
+
+  requirements: Joi.array().items(Joi.string().trim()).min(1).required(),
+
+  openings: Joi.number().integer().min(1).default(1),
+});
+
+export const bulkCreateJobsValidation = Joi.array()
+  .items(singleJobValidation)
+  .min(1)
+  .required()
+  .messages({
+    "array.base": "Jobs must be an array.",
+    "array.min": "At least one job is required.",
+    "any.required": "Jobs data is required.",
+  });

@@ -7,6 +7,7 @@ import {
   updateJobService,
   archiveJobService,
   getSimilarJobsService,
+  bulkCreateJobsService,
 } from "../services/job.service.js";
 
 export const createJob = async (req, res, next) => {
@@ -16,6 +17,20 @@ export const createJob = async (req, res, next) => {
       success: true,
       message: "Job created successfully",
       data: newJob,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const bulkCreateJobs = async (req, res, next) => {
+  try {
+    const jobs = await bulkCreateJobsService(req.user._id, req.body);
+
+    return res.status(201).json({
+      success: true,
+      message: `${jobs.length} jobs created successfully.`,
+      data: jobs,
     });
   } catch (error) {
     next(error);
@@ -84,11 +99,15 @@ export const getAllJobs = async (req, res, next) => {
   try {
     const allJobs = await getAllJobsService(req.query);
 
+    const { jobs, pagination } = await getAllJobsService(req.query);
+
     return res.status(200).json({
       success: true,
       message: "Jobs fetched successfully",
-      data: allJobs,
-      pagination: allJobs.pagination,
+      data: {
+        jobs,
+        pagination,
+      },
     });
   } catch (error) {
     next(error);

@@ -26,6 +26,50 @@ export const createJobService = async (userId, jobData) => {
   return populatedJob;
 };
 
+export const bulkCreateJobsService = async (userId, jobsData) => {
+  const recruiter = await RecruiterModel.findOne({
+    user: userId,
+  });
+
+  if (!recruiter) {
+    const error = new Error("Recruiter profile not found.");
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const jobs = jobsData.map((job) => ({
+    recruiter: recruiter._id,
+
+    title: job.title,
+    description: job.description,
+    location: job.location,
+    workplaceType: job.workplaceType,
+    employmentType: job.employmentType,
+    experience: job.experience,
+
+    salary: {
+      min: job.salary.min,
+      max: job.salary.max,
+    },
+
+    applicationDeadline: job.applicationDeadline,
+
+    skills: job.skills,
+
+    responsibilities: job.responsibilities,
+
+    requirements: job.requirements,
+
+    openings: job.openings ?? 1,
+
+    isArchived: false,
+  }));
+
+  const createdJobs = await JobModel.insertMany(jobs);
+
+  return createdJobs;
+};
+
 export const getMyJobsService = async (userId) => {
   const existingRecruiter = await RecruiterModel.findOne({
     user: userId,
@@ -77,26 +121,6 @@ export const getMyJobsService = async (userId) => {
   return jobs;
 };
 
-// export const getJobByIdService = async (jobId) => {
-//   const existingJob = await JobModel.findOne({
-//     _id: jobId,
-//     isArchived: false,
-//   }).populate({
-//     path: "recruiter",
-//     populate: {
-//       path: "user",
-//       select: "fullName email",
-//     },
-//   });
-
-//   if (!existingJob) {
-//     const error = new Error("Job not found");
-//     error.statusCode = 404;
-//     throw error;
-//   }
-
-//   return existingJob;
-// };
 export const getJobByIdService = async (jobId) => {
   const existingJob = await JobModel.findById(jobId).populate({
     path: "recruiter",
@@ -276,13 +300,23 @@ export const getAllJobsService = async (query) => {
     .skip(skip)
     .limit(limit);
 
+  const totalPages = Math.ceil(totalJobs / limit);
+
   return {
     jobs,
     pagination: {
       totalJobs,
-      totalPages: Math.ceil(totalJobs / limit),
+      totalPages,
       currentPage: page,
       limit,
+
+      hasPreviousPage: page > 1,
+
+      hasNextPage: page < totalPages,
+
+      previousPage: page > 1 ? page - 1 : null,
+
+      nextPage: page < totalPages ? page + 1 : null,
     },
   };
 };
