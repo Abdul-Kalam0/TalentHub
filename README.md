@@ -25,7 +25,7 @@ Built with **React**, **Redux Toolkit**, **Node.js**, **Express.js**, **MongoDB*
 
 > Email: `recruiter@example.com`
 >
-> Password: `123@Demo`
+> Password: `Password@123`
 
 ---
 
@@ -33,7 +33,7 @@ Built with **React**, **Redux Toolkit**, **Node.js**, **Express.js**, **MongoDB*
 
 > Email: `applicant@example.com`
 >
-> Password: `123@Demo`
+> Password: `Password@123`
 
 ---
 
