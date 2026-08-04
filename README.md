@@ -478,10 +478,9 @@ Generates
 ---
 
 # 📸 Screenshots
+## 👤 Applicant Dashboard
 
-## 🏠 Landing Page
-
-![Landing](./screenshots/Landing.png)
+![Dashboard](./screenshots/Dashboard.png)
 
 ---
 
